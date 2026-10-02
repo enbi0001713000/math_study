@@ -1,0 +1,65 @@
+{
+  "grades": [
+    { "id": "j1", "name": "中1" },
+    { "id": "j2", "name": "中2" },
+    { "id": "j3", "name": "中3" },
+    { "id": "m1", "name": "数学I" },
+    { "id": "ma", "name": "数学A" },
+    { "id": "m2", "name": "数学II" },
+    { "id": "mb", "name": "数学B" },
+    { "id": "mc", "name": "数学C" }
+  ],
+  "units": [
+    { "id": "j1-signed", "grade": "j1", "name": "正負の数", "prerequisites": [], "available": true,
+      "keys": ["digits", "dot", "plus", "minus", "times", "paren", "pow", "frac", "lt", "gt", "del"] },
+    { "id": "j1-expr", "grade": "j1", "name": "文字の式", "prerequisites": ["j1-signed"], "available": false, "keys": null },
+    { "id": "j1-lineq", "grade": "j1", "name": "一次方程式", "prerequisites": ["j1-expr"], "available": false, "keys": null },
+    { "id": "j1-propor", "grade": "j1", "name": "比例と反比例", "prerequisites": ["j1-expr"], "available": false, "keys": null },
+    { "id": "j1-plane", "grade": "j1", "name": "平面図形", "prerequisites": [], "available": false, "keys": null },
+    { "id": "j1-solid", "grade": "j1", "name": "空間図形", "prerequisites": ["j1-plane"], "available": false, "keys": null },
+    { "id": "j1-data", "grade": "j1", "name": "データの活用（ヒストグラム・相対度数）", "prerequisites": [], "available": false, "keys": null },
+
+    { "id": "j2-poly", "grade": "j2", "name": "式の計算", "prerequisites": ["j1-expr"], "available": false, "keys": null },
+    { "id": "j2-simul", "grade": "j2", "name": "連立方程式", "prerequisites": ["j1-lineq", "j2-poly"], "available": false, "keys": null },
+    { "id": "j2-linfunc", "grade": "j2", "name": "一次関数", "prerequisites": ["j1-propor", "j1-lineq"], "available": false, "keys": null },
+    { "id": "j2-parallel", "grade": "j2", "name": "平行と合同", "prerequisites": ["j1-plane"], "available": false, "keys": null },
+    { "id": "j2-triquad", "grade": "j2", "name": "三角形と四角形", "prerequisites": ["j2-parallel"], "available": false, "keys": null },
+    { "id": "j2-prob", "grade": "j2", "name": "確率", "prerequisites": ["j1-data"], "available": false, "keys": null },
+    { "id": "j2-boxplot", "grade": "j2", "name": "データの比較（箱ひげ図）", "prerequisites": ["j1-data"], "available": false, "keys": null },
+
+    { "id": "j3-factor", "grade": "j3", "name": "展開と因数分解", "prerequisites": ["j2-poly"], "available": false, "keys": null },
+    { "id": "j3-sqrt", "grade": "j3", "name": "平方根", "prerequisites": ["j3-factor"], "available": false, "keys": null },
+    { "id": "j3-quadeq", "grade": "j3", "name": "二次方程式", "prerequisites": ["j3-factor", "j3-sqrt"], "available": false, "keys": null },
+    { "id": "j3-quadfunc", "grade": "j3", "name": "関数y=ax²", "prerequisites": ["j2-linfunc"], "available": false, "keys": null },
+    { "id": "j3-similar", "grade": "j3", "name": "相似な図形", "prerequisites": ["j2-triquad"], "available": false, "keys": null },
+    { "id": "j3-circle", "grade": "j3", "name": "円", "prerequisites": ["j2-triquad", "j3-similar"], "available": false, "keys": null },
+    { "id": "j3-pythag", "grade": "j3", "name": "三平方の定理", "prerequisites": ["j3-sqrt", "j3-similar"], "available": false, "keys": null },
+    { "id": "j3-sampling", "grade": "j3", "name": "標本調査", "prerequisites": ["j2-boxplot"], "available": false, "keys": null },
+
+    { "id": "m1-numexpr", "grade": "m1", "name": "数と式", "prerequisites": ["j3-factor", "j3-sqrt"], "available": false, "keys": null },
+    { "id": "m1-setlogic", "grade": "m1", "name": "集合と命題", "prerequisites": ["m1-numexpr"], "available": false, "keys": null },
+    { "id": "m1-quadfunc", "grade": "m1", "name": "二次関数", "prerequisites": ["j3-quadfunc", "j3-quadeq"], "available": false, "keys": null },
+    { "id": "m1-trig", "grade": "m1", "name": "図形と計量（三角比）", "prerequisites": ["j3-pythag"], "available": false, "keys": null },
+    { "id": "m1-dataanal", "grade": "m1", "name": "データの分析", "prerequisites": ["j2-boxplot"], "available": false, "keys": null },
+
+    { "id": "ma-comb", "grade": "ma", "name": "場合の数と確率", "prerequisites": ["j2-prob", "m1-setlogic"], "available": false, "keys": null },
+    { "id": "ma-geom", "grade": "ma", "name": "図形の性質", "prerequisites": ["j3-circle", "j3-similar"], "available": false, "keys": null },
+    { "id": "ma-integer", "grade": "ma", "name": "整数の性質", "prerequisites": ["m1-numexpr"], "available": false, "keys": null },
+
+    { "id": "m2-proof", "grade": "m2", "name": "式と証明", "prerequisites": ["m1-numexpr"], "available": false, "keys": null },
+    { "id": "m2-complex", "grade": "m2", "name": "複素数と方程式", "prerequisites": ["m1-quadfunc", "m2-proof"], "available": false, "keys": null },
+    { "id": "m2-coordgeo", "grade": "m2", "name": "図形と方程式", "prerequisites": ["j2-linfunc", "m1-quadfunc", "j3-pythag"], "available": false, "keys": null },
+    { "id": "m2-trigfunc", "grade": "m2", "name": "三角関数", "prerequisites": ["m1-trig", "m2-coordgeo"], "available": false, "keys": null },
+    { "id": "m2-explog", "grade": "m2", "name": "指数関数・対数関数", "prerequisites": ["m1-numexpr"], "available": false, "keys": null },
+    { "id": "m2-diff", "grade": "m2", "name": "微分", "prerequisites": ["m1-quadfunc", "m2-coordgeo"], "available": false, "keys": null },
+    { "id": "m2-integ", "grade": "m2", "name": "積分", "prerequisites": ["m2-diff"], "available": false, "keys": null },
+
+    { "id": "mb-seq", "grade": "mb", "name": "数列", "prerequisites": ["m1-numexpr"], "available": false, "keys": null },
+    { "id": "mb-stat", "grade": "mb", "name": "統計的な推測", "prerequisites": ["m1-dataanal", "ma-comb", "m2-integ"], "available": false, "keys": null },
+
+    { "id": "mc-vec2d", "grade": "mc", "name": "平面ベクトル", "prerequisites": ["m1-trig", "m2-coordgeo"], "available": false, "keys": null },
+    { "id": "mc-vec3d", "grade": "mc", "name": "空間ベクトル", "prerequisites": ["mc-vec2d", "j1-solid"], "available": false, "keys": null },
+    { "id": "mc-curves", "grade": "mc", "name": "平面上の曲線", "prerequisites": ["m2-coordgeo", "m2-trigfunc"], "available": false, "keys": null },
+    { "id": "mc-cplane", "grade": "mc", "name": "複素数平面", "prerequisites": ["m2-complex", "m2-trigfunc", "mc-vec2d"], "available": false, "keys": null }
+  ]
+}
