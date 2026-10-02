@@ -26,12 +26,7 @@ const Progress = (() => {
     state = emptyState();
     if (raw) {
       try {
-        const parsed = JSON.parse(raw);
-        if (parsed && parsed.version === VERSION && parsed.units && parsed.mistakes) {
-          state = parsed;
-        } else {
-          throw new Error('形式が違います');
-        }
+        state = sanitize(JSON.parse(raw));
       } catch (err) {
         console.warn('[進捗] 保存されていた記録を読み込めませんでした。新しく記録を始めます', err);
         try {
@@ -176,6 +171,94 @@ const Progress = (() => {
     return storageOk;
   }
 
+  // ---- 書き出し・読み込み ----
+
+  const FILE_APP = 'math-study';
+
+  const isObject = (v) => v !== null && typeof v === 'object' && !Array.isArray(v);
+  const toCount = (v) => (Number.isInteger(v) && v > 0 ? v : 0);
+  const toDate = (v) => (typeof v === 'string' ? v : null);
+
+  // 読み込んだ記録を項目ごとに確かめ、正しい形のものだけを取り出す
+  function sanitize(input) {
+    if (!isObject(input) || input.version !== VERSION || !isObject(input.units) || !isObject(input.mistakes)) {
+      throw new Error('記録の形式が正しくありません');
+    }
+    const units = {};
+    Object.entries(input.units).forEach(([unitId, u]) => {
+      if (!isObject(u)) return;
+      const sections = {};
+      Object.entries(isObject(u.sections) ? u.sections : {}).forEach(([id, s]) => {
+        if (isObject(s) && s.done === true) sections[id] = { done: true, doneAt: toDate(s.doneAt) };
+      });
+      const stats = {};
+      Object.entries(isObject(u.stats) ? u.stats : {}).forEach(([id, st]) => {
+        if (!isObject(st)) return;
+        const answered = toCount(st.answered);
+        if (answered > 0) stats[id] = { answered, correct: Math.min(toCount(st.correct), answered) };
+      });
+      const t = isObject(u.test) ? u.test : {};
+      const isScore = (v) => typeof v === 'number' && v >= 0 && v <= 100;
+      const history = (Array.isArray(t.history) ? t.history : [])
+        .filter((h) => isObject(h) && isScore(h.score))
+        .map((h) => ({ at: toDate(h.at), score: h.score, passed: h.passed === true }))
+        .slice(-HISTORY_LIMIT);
+      units[unitId] = {
+        sections,
+        stats,
+        test: {
+          best: isScore(t.best) ? t.best : null,
+          passed: t.passed === true,
+          passedAt: toDate(t.passedAt),
+          history,
+        },
+      };
+    });
+    const mistakes = {};
+    Object.entries(input.mistakes).forEach(([problemId, m]) => {
+      if (isObject(m) && typeof m.unitId === 'string' && typeof m.section === 'string') {
+        mistakes[problemId] = { unitId: m.unitId, section: m.section, count: Math.max(toCount(m.count), 1), lastAt: toDate(m.lastAt) };
+      }
+    });
+    const result = { version: VERSION, units, mistakes };
+    if (toDate(input.lastExportedAt)) result.lastExportedAt = input.lastExportedAt;
+    return result;
+  }
+
+  // 書き出すファイルの中身。書き出した日時も記録に残す
+  function exportData() {
+    load().lastExportedAt = now();
+    save();
+    return { app: FILE_APP, format: VERSION, exportedAt: state.lastExportedAt, progress: state };
+  }
+
+  // ファイルの文字列を確かめる。問題があれば Error を投げる
+  function parseImport(text) {
+    let data;
+    try {
+      data = JSON.parse(text);
+    } catch (err) {
+      throw new Error('ファイルを読み取れませんでした（JSON の形式ではありません）');
+    }
+    if (!isObject(data) || data.app !== FILE_APP) {
+      throw new Error('このアプリで書き出したファイルではありません');
+    }
+    if (data.format !== VERSION) {
+      throw new Error('対応していない形式のファイルです');
+    }
+    return { exportedAt: toDate(data.exportedAt), progress: sanitize(data.progress) };
+  }
+
+  // 今の記録を、読み込んだ記録で置き換える
+  function replaceWith(progress) {
+    state = progress;
+    save();
+  }
+
+  function lastExportedAt() {
+    return load().lastExportedAt || null;
+  }
+
   return {
     WEAK_MIN_ANSWERED,
     WEAK_ACCURACY,
@@ -187,5 +270,9 @@ const Progress = (() => {
     isPassed,
     mistakes,
     isStorageAvailable,
+    exportData,
+    parseImport,
+    replaceWith,
+    lastExportedAt,
   };
 })();

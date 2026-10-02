@@ -533,8 +533,85 @@
       })));
     }
 
-    parts.push(el('p', { class: 'note storage-note', text: '記録は、この端末のこのブラウザに保存されます。' }));
+    parts.push(backupArea(map));
     render(...parts);
+  }
+
+  function formatDate(iso) {
+    const d = new Date(iso);
+    if (Number.isNaN(d.getTime())) return '';
+    return `${d.getFullYear()}/${d.getMonth() + 1}/${d.getDate()}`;
+  }
+
+  // ---- バックアップ（書き出し・読み込み） ----
+
+  function backupArea(map) {
+    const message = el('p', { class: 'result', 'aria-live': 'polite' });
+    const showMessage = (text, ok) => {
+      message.className = `result ${ok ? 'is-correct' : 'is-wrong'}`;
+      message.textContent = text;
+    };
+
+    const last = Progress.lastExportedAt();
+    const lastLine = el('p', { class: 'note', text: last
+      ? `最後に書き出した日：${formatDate(last)}`
+      : 'まだ書き出していません。' });
+
+    const exportButton = el('button', { class: 'button primary', type: 'button', text: 'ファイルに書き出す', onclick: () => {
+      const data = Progress.exportData();
+      const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const d = new Date(data.exportedAt);
+      const stamp = `${d.getFullYear()}${String(d.getMonth() + 1).padStart(2, '0')}${String(d.getDate()).padStart(2, '0')}`;
+      const link = el('a', { href: url, download: `math-study-progress-${stamp}.json` });
+      document.body.append(link);
+      link.click();
+      link.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+      lastLine.textContent = `最後に書き出した日：${formatDate(data.exportedAt)}`;
+      showMessage('書き出しました。ファイルを安全な場所に保存しておこう。', true);
+    } });
+
+    const fileInput = el('input', { type: 'file', accept: '.json,application/json', class: 'file-input' });
+    fileInput.hidden = true;
+    fileInput.addEventListener('change', async () => {
+      const file = fileInput.files[0];
+      fileInput.value = '';
+      if (!file) return;
+      let imported;
+      try {
+        imported = Progress.parseImport(await file.text());
+      } catch (err) {
+        showMessage(`読み込めませんでした：${err.message}`, false);
+        return;
+      }
+      const when = imported.exportedAt ? `（${formatDate(imported.exportedAt)} に書き出した記録）` : '';
+      if (!window.confirm(`今の記録を、読み込んだ記録${when}で置き換えます。今の記録は消えます。よろしいですか？`)) {
+        showMessage('読み込みをやめました。今の記録はそのままです。', true);
+        return;
+      }
+      Progress.replaceWith(imported.progress);
+      await renderProgress(map);
+      const area = document.querySelector('.backup-area .result');
+      if (area) {
+        area.className = 'result is-correct';
+        area.textContent = '読み込みました。記録を復元しました。';
+        area.scrollIntoView({ block: 'center' });
+      }
+    });
+    const importButton = el('button', { class: 'button secondary', type: 'button', text: 'ファイルから読み込む', onclick: () => fileInput.click() });
+
+    return el('section', { class: 'backup-area' }, [
+      el('h2', { class: 'sub-title', text: 'バックアップ' }),
+      el('div', { class: 'card' }, [
+        el('p', { class: 'note', text: '記録は、この端末のこのブラウザだけに保存されます。ほかの端末へ移すときや、記録が消えたときのために、ときどきファイルに書き出しておこう。' }),
+        el('p', { class: 'note', text: 'iPhone の Safari では、7日間このサイトを開かないと記録が消えることがあります（ホーム画面に追加した場合はのぞく）。' }),
+        lastLine,
+        el('div', { class: 'button-row' }, [exportButton, importButton]),
+        fileInput,
+        message,
+      ]),
+    ]);
   }
 
   async function route() {
