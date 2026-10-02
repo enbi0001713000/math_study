@@ -49,7 +49,7 @@ const Keypad = (() => {
   }
 
   // 入力中の答えを、指数は右上、分数は上下に重ねて表示する
-  function renderDisplay(display, tokens) {
+  function renderDisplay(display, tokens, withCaret = true) {
     const nodes = [];
     let i = 0;
     while (i < tokens.length) {
@@ -81,11 +81,18 @@ const Keypad = (() => {
         i += 1;
       }
     }
-    nodes.push(el('span', 'kp-caret'));
+    if (withCaret) nodes.push(el('span', 'kp-caret'));
     display.replaceChildren(...nodes);
   }
 
-  function create(keyIds, { onSubmit }) {
+  // 保存された答え（-3/4、2^4*3 など）を、キーパッドと同じ見た目で表示する
+  function renderValue(text) {
+    const node = el('span', 'kp-value');
+    renderDisplay(node, [...String(text)], false);
+    return node;
+  }
+
+  function create(keyIds, { onSubmit, submitLabel = '答え合わせ' }) {
     const enabled = new Set();
     let hasDelete = false;
     (keyIds || []).forEach((id) => {
@@ -144,7 +151,7 @@ const Keypad = (() => {
       if (LABELS[c] && LABELS[c].length > 1) button.classList.add('is-word');
     });
     if (hasDelete) addKey('削除', 'is-delete', remove);
-    addKey('答え合わせ', 'is-submit', submit);
+    addKey(submitLabel, 'is-submit', submit);
 
     update();
 
@@ -178,5 +185,5 @@ const Keypad = (() => {
     if (active.handleKey(event)) event.preventDefault();
   });
 
-  return { create };
+  return { create, renderValue };
 })();

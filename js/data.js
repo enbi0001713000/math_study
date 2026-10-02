@@ -5,6 +5,7 @@ const Data = (() => {
   const PROBLEM_FIELDS = ['id', 'section', 'role', 'question', 'answers', 'hints', 'solution'];
   const PROBLEM_ROLES = ['example', 'check', 'test'];
   const BLOCK_TYPES = ['text', 'math', 'figure'];
+  const TEST_SIZE = 10;
 
   let unitMapCache = null;
   const unitCache = {};
@@ -129,6 +130,18 @@ const Data = (() => {
       if (!Array.isArray(problem.answers)) problem.answers = [];
       if (!Array.isArray(problem.hints)) problem.hints = [];
       if (problem.figure) validateFigure(problem.figure, problemLabel);
+    });
+
+    // 単元テストの問題プール
+    const testProblems = unit.problems.filter((p) => p.role === 'test');
+    if (testProblems.length < TEST_SIZE) {
+      console.warn(`[データ] ${label}: テスト用の問題が${testProblems.length}問しかありません（${TEST_SIZE}問以上必要）`);
+    }
+    unit.sections.forEach((section) => {
+      const hasExplanation = Array.isArray(section.explanation) && section.explanation.length > 0;
+      if (hasExplanation && !testProblems.some((p) => p.section === section.id)) {
+        console.warn(`[データ] ${label}: 小単元 ${section.id} にテスト用の問題がありません`);
+      }
     });
   }
 
