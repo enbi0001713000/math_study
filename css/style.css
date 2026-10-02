@@ -736,8 +736,16 @@ a.button {
   margin-top: 0;
 }
 
-.storage-note {
+.backup-area {
   margin-top: 24px;
+}
+
+.backup-area .note {
+  margin: 0 0 8px;
+}
+
+.backup-area .button-row {
+  margin-top: 12px;
 }
 
 @media (min-width: 900px) {
