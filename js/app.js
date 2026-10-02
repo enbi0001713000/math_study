@@ -41,8 +41,30 @@
     return Array.isArray(section.explanation) && section.explanation.length > 0;
   }
 
-  function renderMap(map) {
+  function formatAccuracy(accuracy) {
+    return accuracy === null ? '—' : `${Math.round(accuracy * 100)}%`;
+  }
+
+  function statusBadge(summary, totalSections) {
+    if (summary.status === 'passed') {
+      return el('span', { class: 'status is-passed', text: `合格（最高${summary.best}点）` });
+    }
+    if (summary.status === 'learning') {
+      return el('span', { class: 'status is-learning', text: `学習中（${summary.doneCount}/${totalSections} 小単元）` });
+    }
+    return el('span', { class: 'status is-new', text: '未学習' });
+  }
+
+  // 学習できる単元の詳細データをまとめて読み込む
+  async function loadAvailableDetails(map) {
+    const available = map.units.filter((u) => u.available);
+    const entries = await Promise.all(available.map(async (u) => [u.id, await Data.loadUnit(u.id)]));
+    return Object.fromEntries(entries);
+  }
+
+  async function renderMap(map) {
     const unitsById = Object.fromEntries(map.units.map((u) => [u.id, u]));
+    const details = await loadAvailableDetails(map);
     const sections = map.grades.map((grade) => {
       const units = map.units.filter((u) => u.grade === grade.id);
       const cards = units.map((unit) => {
@@ -52,6 +74,14 @@
           : el('span', { class: 'unit-name', text: unit.name });
         card.append(title);
         if (!unit.available) card.append(el('span', { class: 'badge', text: '準備中' }));
+        if (details[unit.id]) {
+          const sectionIds = details[unit.id].sections.map((s) => s.id);
+          const summary = Progress.unitSummary(unit.id, sectionIds);
+          card.append(el('div', { class: 'unit-progress' }, [
+            statusBadge(summary, sectionIds.length),
+            el('span', { class: 'accuracy', text: `正答率 ${formatAccuracy(summary.accuracy)}` }),
+          ]));
+        }
         card.append(el('div', { class: 'unit-prereq' }, [
           el('span', { class: 'label', text: '前提：' }),
           prerequisiteLinks(unit, unitsById),
@@ -84,15 +114,38 @@
       ]),
     ];
 
+    // 学習できる前提単元のうち、まだ合格していないものを案内する（ロックはしない）
+    const notPassed = unit.prerequisites
+      .map((id) => unitsById[id])
+      .filter((pre) => pre && pre.available && !Progress.isPassed(pre.id));
+    if (notPassed.length > 0) {
+      header.push(el('div', { class: 'card recommend' }, [
+        el('p', { class: 'recommend-title', text: '先にこちらがおすすめ' }),
+        el('p', { class: 'note', text: '前提単元の単元テストにまだ合格していません。' }),
+        el('ul', { class: 'recommend-list' }, notPassed.map((pre) => el('li', {}, [
+          el('a', { href: `#/unit/${pre.id}`, text: pre.name }),
+        ]))),
+      ]));
+    }
+
     if (!unit.available) {
       render(...header, el('p', { class: 'message', text: 'この単元は準備中です。' }));
       return;
     }
 
     const detail = await Data.loadUnit(unitId);
+    const summary = Progress.unitSummary(unitId, detail.sections.map((s) => s.id));
+    header.push(el('div', { class: 'unit-progress' }, [
+      statusBadge(summary, detail.sections.length),
+      el('span', { class: 'accuracy', text: `正答率 ${formatAccuracy(summary.accuracy)}` }),
+    ]));
     const sectionList = el('ol', { class: 'section-list' }, detail.sections.map((s) => {
       if (isSectionReady(s)) {
-        return el('li', {}, [el('a', { href: `#/unit/${unitId}/${s.id}`, text: s.name })]);
+        const done = summary.doneSections.includes(s.id);
+        return el('li', { class: done ? 'is-done' : '' }, [
+          el('a', { href: `#/unit/${unitId}/${s.id}`, text: s.name }),
+          ...(done ? [el('span', { class: 'done-mark', text: '✓ 完了' })] : []),
+        ]);
       }
       return el('li', { class: 'is-unavailable' }, [
         el('span', { text: s.name }),
@@ -108,6 +161,9 @@
     if (hasTest(detail)) {
       testArea.push(
         el('p', { class: 'note', text: `${Exam.SIZE}問・${Exam.PASS_SCORE}点以上で合格です。小単元をひととおり学んでから受けよう。` }),
+        ...(summary.testCount > 0 ? [el('p', { class: 'test-record', text: summary.passed
+          ? `合格済み（最高${summary.best}点）`
+          : `未合格（最高${summary.best}点・${summary.testCount}回受験）` })] : []),
         el('a', { class: 'button secondary', href: `#/test/${unitId}`, text: '単元テストを受ける' }),
       );
     } else {
@@ -157,22 +213,34 @@
     return body;
   }
 
-  function checkCard(problem, keys, label, onNext, nextLabel) {
+  // onFirstAnswer：最初の答え合わせのときだけ呼ぶ（正答率は最初の答えで数える）
+  function checkCard(problem, keys, label, { onFirstAnswer = null, onCorrect = null, next = null, correctMessage = '正解！' } = {}) {
     let hintLevel = 0;
+    let answered = false;
 
     const result = el('p', { class: 'result', 'aria-live': 'polite' });
     const hintList = el('ol', { class: 'hint-list' });
-    const next = el('button', { class: 'button primary', type: 'button', text: nextLabel, onclick: onNext });
-    next.hidden = true;
+    const nextButton = next
+      ? el('button', { class: 'button primary', type: 'button', text: next.label, onclick: next.onClick })
+      : null;
+    if (nextButton) nextButton.hidden = true;
 
     const keypad = Keypad.create(keys, { onSubmit: (value) => {
       if (value === '') return;
-      if (Grader.isCorrect(problem, value)) {
+      const correct = Grader.isCorrect(problem, value);
+      if (!answered) {
+        answered = true;
+        if (onFirstAnswer) onFirstAnswer(correct);
+      }
+      if (correct) {
         result.className = 'result is-correct';
-        result.textContent = '正解！';
+        result.textContent = correctMessage;
         keypad.setDisabled(true);
-        next.hidden = false;
-        next.focus();
+        if (onCorrect) onCorrect();
+        if (nextButton) {
+          nextButton.hidden = false;
+          nextButton.focus();
+        }
         return;
       }
       result.className = 'result is-wrong';
@@ -191,7 +259,7 @@
       result,
       hintList,
       solutionToggle(problem),
-      next,
+      ...(nextButton ? [nextButton] : []),
     ]);
   }
 
@@ -234,12 +302,15 @@
         problem,
         unit.keys,
         `確認問題 ${i + 1} / ${checks.length}`,
-        next,
-        i < checks.length - 1 ? '次の問題へ' : '次へ',
+        {
+          onFirstAnswer: (correct) => Progress.recordAnswer(unitId, problem, correct),
+          next: { label: i < checks.length - 1 ? '次の問題へ' : '次へ', onClick: next },
+        },
       ) })),
     ];
 
     function showDone() {
+      Progress.markSectionDone(unitId, sectionId);
       const actions = [];
       if (nextSection) {
         actions.push(el('a', { class: 'button primary', href: `#/unit/${unitId}/${nextSection.id}`, text: '次の小単元へ' }));
@@ -330,6 +401,7 @@
     }
 
     function showResult(grade) {
+      Progress.recordTest(unitId, grade);
       const summary = el('div', { class: `card score-card ${grade.passed ? 'is-passed' : 'is-failed'}` }, [
         el('p', { class: 'score', text: `${grade.score}点` }),
         el('p', { class: 'score-detail', text: `${questions.length}問中 ${grade.correctCount}問 正解` }),
@@ -370,19 +442,116 @@
     showQuestion(0);
   }
 
+  // ---- 学習の記録 ----
+
+  async function renderProgress(map) {
+    const details = await loadAvailableDetails(map);
+    const units = map.units.filter((u) => details[u.id]);
+    const unitsById = Object.fromEntries(map.units.map((u) => [u.id, u]));
+    const parts = [el('h1', { class: 'page-title', text: '学習の記録' })];
+
+    if (!Progress.isStorageAvailable()) {
+      parts.push(el('p', { class: 'message error', text: 'このブラウザでは記録を保存できません（プライベートモードなど）。ページを閉じると記録は消えます。' }));
+    }
+
+    // 単元ごとの状況
+    parts.push(el('h2', { class: 'sub-title', text: '単元ごとの状況' }));
+    parts.push(el('ul', { class: 'progress-list' }, units.map((unit) => {
+      const sections = details[unit.id].sections;
+      const summary = Progress.unitSummary(unit.id, sections.map((s) => s.id));
+      return el('li', { class: 'card' }, [
+        el('a', { class: 'unit-name', href: `#/unit/${unit.id}`, text: unit.name }),
+        el('div', { class: 'unit-progress' }, [statusBadge(summary, sections.length)]),
+        el('dl', { class: 'progress-stats' }, [
+          el('dt', { text: '小単元' }), el('dd', { text: `${summary.doneCount} / ${sections.length} 完了` }),
+          el('dt', { text: '正答率' }), el('dd', { text: summary.answered === 0
+            ? '—'
+            : `${formatAccuracy(summary.accuracy)}（${summary.answered}問中 ${summary.correct}問）` }),
+          el('dt', { text: '単元テスト' }), el('dd', { text: summary.testCount === 0
+            ? '未受験'
+            : `最高${summary.best}点・${summary.passed ? '合格' : '未合格'}` }),
+        ]),
+      ]);
+    })));
+
+    // 弱点
+    const weakItems = [];
+    units.forEach((unit) => {
+      const detail = details[unit.id];
+      const summary = Progress.unitSummary(unit.id, detail.sections.map((s) => s.id));
+      if (summary.weak) {
+        weakItems.push(el('li', {}, [
+          el('a', { href: `#/unit/${unit.id}`, text: unit.name }),
+          el('span', { class: 'note', text: `（正答率 ${formatAccuracy(summary.accuracy)}）` }),
+        ]));
+      }
+      detail.sections.forEach((section) => {
+        const stat = summary.sections[section.id];
+        if (stat && stat.weak) {
+          weakItems.push(el('li', {}, [
+            el('a', { href: `#/unit/${unit.id}/${section.id}`, text: `${unit.name} ＞ ${section.name}` }),
+            el('span', { class: 'note', text: `（正答率 ${formatAccuracy(stat.accuracy)}）` }),
+          ]));
+        }
+      });
+    });
+    const weakRule = `答えた回数が${Progress.WEAK_MIN_ANSWERED}回以上で、正答率が${Math.round(Progress.WEAK_ACCURACY * 100)}%未満の単元・小単元を表示します。`;
+    parts.push(el('h2', { class: 'sub-title', text: '弱点' }));
+    parts.push(weakItems.length > 0
+      ? el('div', { class: 'card' }, [el('p', { class: 'note', text: weakRule }), el('ul', { class: 'weak-list' }, weakItems)])
+      : el('p', { class: 'note', text: `今のところ弱点はありません。${weakRule}` }));
+
+    // 復習リスト
+    const items = Progress.mistakes()
+      .map((m) => {
+        const detail = details[m.unitId];
+        const problem = detail && detail.problems.find((p) => p.id === m.problemId);
+        return problem ? { ...m, problem, unit: unitsById[m.unitId], detail } : null;
+      })
+      .filter(Boolean);
+    parts.push(el('h2', { class: 'sub-title', text: `復習リスト（${items.length}問）` }));
+    if (items.length === 0) {
+      parts.push(el('p', { class: 'note', text: 'まちがえた問題はありません。' }));
+    } else {
+      parts.push(el('p', { class: 'note', text: '確認問題や単元テストでまちがえた問題です。解き直して正解すると、リストから外れます。' }));
+      parts.push(el('ul', { class: 'review-items' }, items.map((item) => {
+        const section = item.detail.sections.find((s) => s.id === item.section);
+        const meta = `${item.unit.name} ＞ ${section ? section.name : item.section}・${item.count}回まちがい`;
+        const wrapper = el('li', { class: 'review-item' });
+        const retry = el('button', { class: 'button secondary', type: 'button', text: '解き直す', onclick: () => {
+          wrapper.replaceChildren(checkCard(item.problem, item.unit.keys, meta, {
+            onCorrect: () => Progress.resolveMistake(item.problemId),
+            correctMessage: '正解！復習リストから外しました。',
+          }));
+        } });
+        wrapper.append(el('div', { class: 'card' }, [
+          el('p', { class: 'problem-label', text: meta }),
+          el('p', { class: 'problem-question', text: item.problem.question }),
+          retry,
+        ]));
+        return wrapper;
+      })));
+    }
+
+    parts.push(el('p', { class: 'note storage-note', text: '記録は、この端末のこのブラウザに保存されます。' }));
+    render(...parts);
+  }
+
   async function route() {
     try {
       const map = await Data.loadUnitMap();
       const testMatch = location.hash.match(/^#\/test\/([\w-]+)$/);
       const match = location.hash.match(/^#\/unit\/([\w-]+)(?:\/([\w-]+))?$/);
-      if (testMatch) {
+      if (location.hash === '#/progress') {
+        await renderProgress(map);
+      } else if (testMatch) {
         await renderTest(map, testMatch[1]);
       } else if (match && match[2]) {
         await renderSection(map, match[1], match[2]);
       } else if (match) {
         await renderUnit(map, match[1]);
       } else {
-        renderMap(map);
+        await renderMap(map);
       }
     } catch (err) {
       console.error(err);

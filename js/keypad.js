@@ -172,6 +172,8 @@ const Keypad = (() => {
         return true;
       },
     };
+    // 画面に複数あるときは、最後に触ったキーパッドがキーボード入力を受け取る
+    root.addEventListener('pointerdown', () => { active = keypad; });
     active = keypad;
     return keypad;
   }
