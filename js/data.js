@@ -2,6 +2,9 @@
 const Data = (() => {
   const UNIT_FIELDS = ['id', 'grade', 'name', 'prerequisites'];
   const SECTION_FIELDS = ['id', 'name'];
+  const PROBLEM_FIELDS = ['id', 'section', 'role', 'question', 'answers', 'hints', 'solution'];
+  const PROBLEM_ROLES = ['example', 'check', 'test'];
+  const BLOCK_TYPES = ['text', 'math', 'figure'];
 
   let unitMapCache = null;
   const unitCache = {};
@@ -72,9 +75,75 @@ const Data = (() => {
       console.warn(`[データ] ${label}: sections が配列ではありません`);
       unit.sections = [];
     }
+    const sectionIds = new Set();
     unit.sections.forEach((section, i) => {
-      warnMissing(section, SECTION_FIELDS, `${label} の小単元 ${section.id || `#${i}`}`);
+      const sectionLabel = `${label} の小単元 ${section.id || `#${i}`}`;
+      warnMissing(section, SECTION_FIELDS, sectionLabel);
+      sectionIds.add(section.id);
+      if (section.explanation === undefined) return;
+      if (!Array.isArray(section.explanation)) {
+        console.warn(`[データ] ${sectionLabel}: explanation が配列ではありません`);
+        section.explanation = [];
+        return;
+      }
+      section.explanation.forEach((block, j) => {
+        const blockLabel = `${sectionLabel} の解説ブロック #${j}`;
+        if (!BLOCK_TYPES.includes(block.type)) {
+          console.warn(`[データ] ${blockLabel}: type「${block.type}」は使えません`);
+        } else if (block.type === 'figure') {
+          validateFigure(block.figure, blockLabel);
+        } else {
+          warnMissing(block, ['text'], blockLabel);
+        }
+      });
     });
+
+    if (!Array.isArray(unit.problems)) {
+      console.warn(`[データ] ${label}: problems が配列ではありません`);
+      unit.problems = [];
+    }
+    const problemIds = new Set();
+    unit.problems.forEach((problem, i) => {
+      const problemLabel = `${label} の問題 ${problem.id || `#${i}`}`;
+      warnMissing(problem, PROBLEM_FIELDS, problemLabel);
+      if (!('figure' in problem)) {
+        console.warn(`[データ] ${problemLabel}: 必須項目「figure」がありません（図がないときは null）`);
+      }
+      if (problemIds.has(problem.id)) {
+        console.warn(`[データ] ${problemLabel}: 問題IDが重複しています`);
+      }
+      problemIds.add(problem.id);
+      if (problem.section && !sectionIds.has(problem.section)) {
+        console.warn(`[データ] ${problemLabel}: 小単元「${problem.section}」が sections にありません`);
+      }
+      if (problem.role && !PROBLEM_ROLES.includes(problem.role)) {
+        console.warn(`[データ] ${problemLabel}: role「${problem.role}」は使えません`);
+      }
+      if (problem.answers !== undefined && (!Array.isArray(problem.answers) || problem.answers.length === 0)) {
+        console.warn(`[データ] ${problemLabel}: answers は1つ以上の正解を持つ配列にしてください`);
+      }
+      if (problem.hints !== undefined && !Array.isArray(problem.hints)) {
+        console.warn(`[データ] ${problemLabel}: hints が配列ではありません`);
+      }
+      // 不足していても画面が止まらないようにする
+      if (!Array.isArray(problem.answers)) problem.answers = [];
+      if (!Array.isArray(problem.hints)) problem.hints = [];
+      if (problem.figure) validateFigure(problem.figure, problemLabel);
+    });
+  }
+
+  function validateFigure(figure, label) {
+    if (!figure || typeof figure !== 'object') {
+      console.warn(`[データ] ${label}: figure がありません`);
+      return;
+    }
+    if (figure.type === 'numberLine') {
+      if (typeof figure.min !== 'number' || typeof figure.max !== 'number' || figure.min >= figure.max) {
+        console.warn(`[データ] ${label}: 数直線の min・max が正しくありません`);
+      }
+    } else {
+      console.warn(`[データ] ${label}: 図の種類「${figure.type}」には対応していません`);
+    }
   }
 
   async function loadUnitMap() {
