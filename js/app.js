@@ -8,6 +8,7 @@
     Object.entries(attrs).forEach(([key, value]) => {
       if (key === 'text') node.textContent = value;
       else if (key === 'class') node.className = value;
+      else if (key === 'onclick') node.addEventListener('click', value);
       else node.setAttribute(key, value);
     });
     children.forEach((child) => node.append(child));
@@ -33,6 +34,11 @@
       list.append(el('a', { class: 'prereq-link', href: `#/unit/${id}`, text: pre ? pre.name : id }));
     });
     return list;
+  }
+
+  // 解説があれば、その小単元は学習できる
+  function isSectionReady(section) {
+    return Array.isArray(section.explanation) && section.explanation.length > 0;
   }
 
   function renderMap(map) {
@@ -84,23 +90,186 @@
     }
 
     const detail = await Data.loadUnit(unitId);
-    const sectionList = el('ol', { class: 'section-list' },
-      detail.sections.map((s) => el('li', { text: s.name })));
-    const startButton = el('button', { class: 'button primary', type: 'button', text: '学習を始める', disabled: '' });
-    render(
-      ...header,
-      el('h2', { class: 'sub-title', text: '小単元' }),
-      sectionList,
-      startButton,
-      el('p', { class: 'note', text: '学習画面は準備中です。' }),
-    );
+    const sectionList = el('ol', { class: 'section-list' }, detail.sections.map((s) => {
+      if (isSectionReady(s)) {
+        return el('li', {}, [el('a', { href: `#/unit/${unitId}/${s.id}`, text: s.name })]);
+      }
+      return el('li', { class: 'is-unavailable' }, [
+        el('span', { text: s.name }),
+        el('span', { class: 'badge', text: '準備中' }),
+      ]);
+    }));
+
+    const first = detail.sections.find(isSectionReady);
+    const start = first
+      ? el('a', { class: 'button primary', href: `#/unit/${unitId}/${first.id}`, text: '学習を始める' })
+      : el('p', { class: 'note', text: '学習画面は準備中です。' });
+    render(...header, el('h2', { class: 'sub-title', text: '小単元' }), sectionList, start);
+  }
+
+  // ---- 小単元の学習画面（解説 → 例題 → 確認問題） ----
+
+  const STAGES = [
+    { id: 'explain', name: '解説' },
+    { id: 'example', name: '例題' },
+    { id: 'check', name: '確認問題' },
+  ];
+
+  function stepper(current) {
+    return el('ol', { class: 'stepper' }, STAGES.map((stage) => el('li', {
+      class: stage.id === current ? 'is-current' : '',
+      text: stage.name,
+    })));
+  }
+
+  function explanationBlock(block) {
+    if (block.type === 'math') return el('p', { class: 'block-math', text: block.text });
+    if (block.type === 'figure') return el('div', { class: 'block-figure' }, [Figure.render(block.figure)]);
+    return el('p', { class: 'block-text', text: block.text });
+  }
+
+  function solutionToggle(problem) {
+    return el('details', { class: 'solution' }, [
+      el('summary', { text: '解き方を見る' }),
+      el('p', { class: 'solution-text', text: problem.solution }),
+    ]);
+  }
+
+  function problemBody(problem, label) {
+    const body = [
+      el('p', { class: 'problem-label', text: label }),
+      el('p', { class: 'problem-question', text: problem.question }),
+    ];
+    if (problem.figure) body.push(el('div', { class: 'block-figure' }, [Figure.render(problem.figure)]));
+    return body;
+  }
+
+  // 仮の採点：前後の空白を除いて answers と完全一致するか（手順3でキーパッドと採点に置き換える）
+  function isCorrect(problem, input) {
+    return problem.answers.includes(input.trim());
+  }
+
+  function checkCard(problem, label, onNext, nextLabel) {
+    let hintLevel = 0;
+
+    const input = el('input', {
+      class: 'answer-input',
+      type: 'text',
+      autocomplete: 'off',
+      'aria-label': '答え',
+    });
+    const submit = el('button', { class: 'button primary', type: 'submit', text: '答え合わせ' });
+    const form = el('form', { class: 'answer-form' }, [input, submit]);
+    const result = el('p', { class: 'result', 'aria-live': 'polite' });
+    const hintList = el('ol', { class: 'hint-list' });
+    const next = el('button', { class: 'button primary', type: 'button', text: nextLabel, onclick: onNext });
+    next.hidden = true;
+
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      if (input.value.trim() === '') return;
+      if (isCorrect(problem, input.value)) {
+        result.className = 'result is-correct';
+        result.textContent = '正解！';
+        input.disabled = true;
+        submit.disabled = true;
+        next.hidden = false;
+        next.focus();
+        return;
+      }
+      result.className = 'result is-wrong';
+      if (hintLevel < problem.hints.length) {
+        hintList.append(el('li', { text: problem.hints[hintLevel] }));
+        hintLevel += 1;
+        result.textContent = '不正解です。ヒントを見て、もう一度考えてみよう。';
+      } else {
+        result.textContent = '不正解です。解き方を見て、もう一度考えてみよう。';
+      }
+    });
+
+    return el('div', { class: 'card' }, [
+      ...problemBody(problem, label),
+      form,
+      result,
+      hintList,
+      solutionToggle(problem),
+      next,
+    ]);
+  }
+
+  async function renderSection(map, unitId, sectionId) {
+    const unit = map.units.find((u) => u.id === unitId);
+    if (!unit || !unit.available) {
+      showError('単元が見つかりません。');
+      return;
+    }
+    const detail = await Data.loadUnit(unitId);
+    const index = detail.sections.findIndex((s) => s.id === sectionId);
+    const section = detail.sections[index];
+    if (!section || !isSectionReady(section)) {
+      showError('この小単元は準備中です。');
+      return;
+    }
+
+    const problems = detail.problems.filter((p) => p.section === sectionId);
+    const examples = problems.filter((p) => p.role === 'example');
+    const checks = problems.filter((p) => p.role === 'check');
+    const nextSection = detail.sections.slice(index + 1).find(isSectionReady);
+
+    const header = [
+      el('a', { class: 'back-link', href: `#/unit/${unitId}`, text: `← ${unit.name}` }),
+      el('h1', { class: 'page-title', text: section.name }),
+    ];
+
+    // 表示する画面を順番に並べ、1つずつ進める
+    const steps = [
+      { stage: 'explain', draw: (next) => el('div', { class: 'card' }, [
+        ...section.explanation.map(explanationBlock),
+        el('button', { class: 'button primary', type: 'button', text: '次へ', onclick: next }),
+      ]) },
+      ...examples.map((problem, i) => ({ stage: 'example', draw: (next) => el('div', { class: 'card' }, [
+        ...problemBody(problem, examples.length > 1 ? `例題 ${i + 1}` : '例題'),
+        solutionToggle(problem),
+        el('button', { class: 'button primary', type: 'button', text: '次へ', onclick: next }),
+      ]) })),
+      ...checks.map((problem, i) => ({ stage: 'check', draw: (next) => checkCard(
+        problem,
+        `確認問題 ${i + 1} / ${checks.length}`,
+        next,
+        i < checks.length - 1 ? '次の問題へ' : '次へ',
+      ) })),
+    ];
+
+    function showDone() {
+      const actions = [];
+      if (nextSection) {
+        actions.push(el('a', { class: 'button primary', href: `#/unit/${unitId}/${nextSection.id}`, text: '次の小単元へ' }));
+      }
+      actions.push(el('a', { class: 'button secondary', href: `#/unit/${unitId}`, text: `${unit.name}のトップへ戻る` }));
+      render(...header, el('div', { class: 'card' }, [
+        el('p', { class: 'done-message', text: 'この小単元の学習はおわりです。' }),
+        el('div', { class: 'button-row' }, actions),
+      ]));
+    }
+
+    function show(i) {
+      if (i >= steps.length) {
+        showDone();
+        return;
+      }
+      render(...header, stepper(steps[i].stage), steps[i].draw(() => show(i + 1)));
+    }
+
+    show(0);
   }
 
   async function route() {
     try {
       const map = await Data.loadUnitMap();
-      const match = location.hash.match(/^#\/unit\/([\w-]+)$/);
-      if (match) {
+      const match = location.hash.match(/^#\/unit\/([\w-]+)(?:\/([\w-]+))?$/);
+      if (match && match[2]) {
+        await renderSection(map, match[1], match[2]);
+      } else if (match) {
         await renderUnit(map, match[1]);
       } else {
         renderMap(map);
