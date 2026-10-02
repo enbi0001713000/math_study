@@ -144,35 +144,20 @@
     return body;
   }
 
-  // 仮の採点：前後の空白を除いて answers と完全一致するか（手順3でキーパッドと採点に置き換える）
-  function isCorrect(problem, input) {
-    return problem.answers.includes(input.trim());
-  }
-
-  function checkCard(problem, label, onNext, nextLabel) {
+  function checkCard(problem, keys, label, onNext, nextLabel) {
     let hintLevel = 0;
 
-    const input = el('input', {
-      class: 'answer-input',
-      type: 'text',
-      autocomplete: 'off',
-      'aria-label': '答え',
-    });
-    const submit = el('button', { class: 'button primary', type: 'submit', text: '答え合わせ' });
-    const form = el('form', { class: 'answer-form' }, [input, submit]);
     const result = el('p', { class: 'result', 'aria-live': 'polite' });
     const hintList = el('ol', { class: 'hint-list' });
     const next = el('button', { class: 'button primary', type: 'button', text: nextLabel, onclick: onNext });
     next.hidden = true;
 
-    form.addEventListener('submit', (event) => {
-      event.preventDefault();
-      if (input.value.trim() === '') return;
-      if (isCorrect(problem, input.value)) {
+    const keypad = Keypad.create(keys, { onSubmit: (value) => {
+      if (value === '') return;
+      if (Grader.isCorrect(problem, value)) {
         result.className = 'result is-correct';
         result.textContent = '正解！';
-        input.disabled = true;
-        submit.disabled = true;
+        keypad.setDisabled(true);
         next.hidden = false;
         next.focus();
         return;
@@ -185,11 +170,11 @@
       } else {
         result.textContent = '不正解です。解き方を見て、もう一度考えてみよう。';
       }
-    });
+    } });
 
     return el('div', { class: 'card' }, [
       ...problemBody(problem, label),
-      form,
+      keypad.element,
       result,
       hintList,
       solutionToggle(problem),
@@ -234,6 +219,7 @@
       ]) })),
       ...checks.map((problem, i) => ({ stage: 'check', draw: (next) => checkCard(
         problem,
+        unit.keys,
         `確認問題 ${i + 1} / ${checks.length}`,
         next,
         i < checks.length - 1 ? '次の問題へ' : '次へ',

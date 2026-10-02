@@ -324,24 +324,126 @@ a.button {
   font-size: 1.05rem;
 }
 
-.answer-form {
-  display: flex;
-  gap: 8px;
+/* キーパッド */
+.keypad {
+  max-width: 420px;
 }
 
-.answer-input {
-  flex: 1;
-  min-width: 0;
-  padding: 10px 12px;
+.kp-display {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  min-height: 56px;
+  margin-bottom: 8px;
+  padding: 8px 12px;
   border: 1px solid var(--border);
   border-radius: var(--radius);
-  font-size: 1.1rem;
+  background: var(--surface);
+  font-size: 1.4rem;
+  line-height: 1.2;
+  overflow-x: auto;
 }
 
-.answer-form .button {
-  width: auto;
-  min-width: 0;
-  white-space: nowrap;
+.kp-sup {
+  display: inline-flex;
+  align-self: flex-start;
+  font-size: 0.65em;
+  margin-left: 1px;
+}
+
+.kp-frac {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 2px;
+  font-size: 0.8em;
+}
+
+.kp-num {
+  padding: 0 2px;
+  border-bottom: 1.5px solid currentColor;
+}
+
+.kp-num,
+.kp-den {
+  display: inline-flex;
+  justify-content: center;
+  min-width: 1em;
+}
+
+.kp-slot {
+  display: inline-block;
+  width: 0.6em;
+  height: 0.9em;
+  border: 1px dashed var(--muted);
+}
+
+.kp-caret {
+  display: inline-block;
+  width: 2px;
+  height: 1.1em;
+  margin-left: 1px;
+  background: var(--accent);
+  animation: kp-blink 1s step-end infinite;
+}
+
+.keypad.is-disabled .kp-caret {
+  display: none;
+}
+
+@keyframes kp-blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+.kp-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 6px;
+}
+
+.kp-key {
+  min-height: 48px;
+  padding: 0;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface);
+  color: var(--text);
+  font-size: 1.25rem;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+.kp-key:active {
+  background: var(--bg);
+}
+
+.kp-key.is-symbol {
+  background: var(--bg);
+}
+
+.kp-key.is-word {
+  font-size: 0.875rem;
+}
+
+.kp-key.is-delete {
+  grid-column: span 2;
+  font-size: 1rem;
+}
+
+.kp-key.is-submit {
+  grid-column: span 3;
+  border-color: var(--accent);
+  background: var(--accent);
+  color: var(--accent-text);
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+.kp-key:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
 .result {
