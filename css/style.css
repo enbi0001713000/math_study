@@ -908,3 +908,72 @@ a.button {
   font-weight: bold;
   fill: var(--text);
 }
+
+/* ヒストグラム */
+.histogram {
+  max-width: 360px;
+}
+
+.histogram .grid {
+  stroke: var(--border);
+  stroke-width: 1;
+}
+
+.histogram .axis {
+  stroke: var(--text);
+  stroke-width: 1.5;
+}
+
+.histogram .bar {
+  fill: #9dbcf2;
+  stroke: var(--accent);
+  stroke-width: 1.2;
+}
+
+.histogram .freq-line {
+  fill: none;
+  stroke: var(--text);
+  stroke-width: 2;
+}
+
+.histogram .freq-dot {
+  fill: var(--text);
+}
+
+.histogram text {
+  font-size: 11px;
+  fill: var(--muted);
+  text-anchor: middle;
+}
+
+.histogram .tick-label.is-y,
+.histogram .axis-name.is-y {
+  text-anchor: end;
+}
+
+.histogram .axis-name.is-x {
+  text-anchor: end;
+}
+
+/* 表 */
+.data-table {
+  margin: 0 auto;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+.data-table th,
+.data-table td {
+  padding: 4px 10px;
+  border: 1px solid var(--border);
+  text-align: center;
+}
+
+.data-table th {
+  background: var(--bg);
+  font-weight: bold;
+}
+
+.block-figure {
+  overflow-x: auto;
+}

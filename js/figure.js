@@ -1,4 +1,4 @@
-// 図（数直線・座標平面・図形・立体）を SVG で描く
+// 図（数直線・座標平面・図形・立体・ヒストグラム・表）を描く
 const Figure = (() => {
   const SVG_NS = 'http://www.w3.org/2000/svg';
   let clipCount = 0;
@@ -514,7 +514,77 @@ const Figure = (() => {
     return svg;
   }
 
+  // ヒストグラム：階級ごとの度数を、すき間のない長方形で表す（度数折れ線も描ける）
+  function histogram(fig) {
+    const freq = fig.freq || [];
+    const n = freq.length;
+    const maxF = Math.max(1, ...freq);
+    const yStep = maxF > 10 ? 2 : 1;
+    const yMax = Math.ceil(maxF / yStep) * yStep + (fig.polygon ? 0 : 0);
+    const left = 38;
+    const right = 14;
+    const top = 22;
+    const bottom = 40;
+    const plotW = 260;
+    const plotH = 170;
+    const barW = plotW / (n + (fig.polygon ? 2 : 0));
+    const x0 = left + (fig.polygon ? barW : 0);
+    const X = (i) => x0 + i * barW;
+    const Y = (f) => top + plotH - (f / yMax) * plotH;
+    const svg = svgEl('svg', {
+      class: 'figure histogram',
+      viewBox: `0 0 ${left + plotW + right} ${top + plotH + bottom}`,
+      role: 'img',
+      'aria-label': `ヒストグラム：${freq.map((f, i) => `${fig.start + i * fig.width}以上${fig.start + (i + 1) * fig.width}未満が${f}`).join('、')}`,
+    });
+    for (let f = 0; f <= yMax; f += yStep) {
+      svg.append(svgEl('line', { x1: left, y1: Y(f), x2: left + plotW, y2: Y(f), class: 'grid' }));
+      svg.append(svgEl('text', { x: left - 6, y: Y(f) + 4, class: 'tick-label is-y' }, String(f)));
+    }
+    freq.forEach((f, i) => {
+      if (f > 0) svg.append(svgEl('rect', { x: X(i), y: Y(f), width: barW, height: Y(0) - Y(f), class: 'bar' }));
+    });
+    for (let i = 0; i <= n; i += 1) {
+      svg.append(svgEl('text', { x: X(i), y: top + plotH + 16, class: 'tick-label' }, String(fig.start + i * fig.width)));
+    }
+    if (fig.polygon) {
+      const pts = [[X(-0.5), Y(0)], ...freq.map((f, i) => [X(i + 0.5), Y(f)]), [X(n + 0.5), Y(0)]];
+      svg.append(svgEl('polyline', { points: pts.map((q) => q.join(',')).join(' '), class: 'freq-line' }));
+      pts.forEach(([px1, py1]) => svg.append(svgEl('circle', { cx: px1, cy: py1, r: 3, class: 'freq-dot' })));
+    }
+    svg.append(svgEl('line', { x1: left, y1: Y(0), x2: left + plotW, y2: Y(0), class: 'axis' }));
+    svg.append(svgEl('line', { x1: left, y1: Y(0), x2: left, y2: top - 6, class: 'axis' }));
+    if (fig.yLabel) svg.append(svgEl('text', { x: left - 6, y: top - 9, class: 'axis-name is-y' }, fig.yLabel));
+    if (fig.xLabel) svg.append(svgEl('text', { x: left + plotW, y: top + plotH + 34, class: 'axis-name is-x' }, fig.xLabel));
+    return svg;
+  }
+
+  // 表：見出しの行と、データの行（HTML の表で表示する）
+  function table(fig) {
+    const t = document.createElement('table');
+    t.className = 'figure data-table';
+    const head = document.createElement('tr');
+    (fig.headers || []).forEach((h) => {
+      const th = document.createElement('th');
+      th.textContent = h;
+      head.append(th);
+    });
+    t.append(head);
+    (fig.rows || []).forEach((row) => {
+      const tr = document.createElement('tr');
+      row.forEach((c) => {
+        const td = document.createElement('td');
+        td.textContent = c;
+        tr.append(td);
+      });
+      t.append(tr);
+    });
+    return t;
+  }
+
   function render(fig) {
+    if (fig && fig.type === 'histogram') return histogram(fig);
+    if (fig && fig.type === 'table') return table(fig);
     if (fig && fig.type === 'solid') return solid(fig);
     if (fig && fig.type === 'geometry') return geometry(fig);
     if (fig && fig.type === 'numberLine') return numberLine(fig);
