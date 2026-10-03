@@ -154,6 +154,20 @@ const Data = (() => {
       if (typeof figure.min !== 'number' || typeof figure.max !== 'number' || figure.min >= figure.max) {
         console.warn(`[データ] ${label}: 数直線の min・max が正しくありません`);
       }
+    } else if (figure.type === 'coordPlane') {
+      if (typeof figure.min !== 'number' || typeof figure.max !== 'number' || figure.min >= 0 || figure.max <= 0) {
+        console.warn(`[データ] ${label}: 座標平面の min・max が正しくありません（min は負、max は正）`);
+      }
+      (figure.points || []).forEach((p, i) => {
+        if (typeof p.x !== 'number' || typeof p.y !== 'number') {
+          console.warn(`[データ] ${label}: 座標平面の点 #${i} の x・y が数ではありません`);
+        }
+      });
+      (figure.graphs || []).forEach((g, i) => {
+        if (!['linear', 'inverse'].includes(g.kind) || typeof g.a !== 'number') {
+          console.warn(`[データ] ${label}: 座標平面のグラフ #${i} は kind（linear・inverse）と数の a が必要です`);
+        }
+      });
     } else {
       console.warn(`[データ] ${label}: 図の種類「${figure.type}」には対応していません`);
     }
