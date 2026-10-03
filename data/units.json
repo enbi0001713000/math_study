@@ -12,7 +12,8 @@
   "units": [
     { "id": "j1-signed", "grade": "j1", "name": "正負の数", "prerequisites": [], "available": true,
       "keys": ["digits", "dot", "plus", "minus", "times", "paren", "pow", "frac", "lt", "gt", "del"] },
-    { "id": "j1-expr", "grade": "j1", "name": "文字の式", "prerequisites": ["j1-signed"], "available": false, "keys": null },
+    { "id": "j1-expr", "grade": "j1", "name": "文字の式", "prerequisites": ["j1-signed"], "available": true,
+      "keys": ["digits", "dot", "plus", "minus", "paren", "pow", "frac", "x", "y", "a", "b", "eq", "lt", "gt", "del"] },
     { "id": "j1-lineq", "grade": "j1", "name": "一次方程式", "prerequisites": ["j1-expr"], "available": false, "keys": null },
     { "id": "j1-propor", "grade": "j1", "name": "比例と反比例", "prerequisites": ["j1-expr"], "available": false, "keys": null },
     { "id": "j1-plane", "grade": "j1", "name": "平面図形", "prerequisites": [], "available": false, "keys": null },
