@@ -764,3 +764,55 @@ a.button {
     grid-template-columns: repeat(2, 1fr);
   }
 }
+
+/* 座標平面 */
+.coord-plane {
+  max-width: 340px;
+}
+
+.coord-plane .grid {
+  stroke: var(--border);
+  stroke-width: 1;
+}
+
+.coord-plane .axis {
+  stroke: var(--text);
+  stroke-width: 1.5;
+}
+
+.coord-plane .arrow {
+  fill: var(--text);
+}
+
+.coord-plane text {
+  font-size: 11px;
+  fill: var(--muted);
+  text-anchor: middle;
+}
+
+.coord-plane .tick-label.is-y {
+  text-anchor: end;
+}
+
+.coord-plane .axis-label {
+  font-size: 14px;
+  font-style: italic;
+  fill: var(--text);
+}
+
+.coord-plane .graph {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 2.5;
+}
+
+.coord-plane .point {
+  fill: #c0392b;
+}
+
+.coord-plane .point-label {
+  font-size: 13px;
+  font-weight: bold;
+  fill: #c0392b;
+  text-anchor: start;
+}
