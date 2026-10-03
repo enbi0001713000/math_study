@@ -1,4 +1,4 @@
-// 図（数直線・座標平面・図形）を SVG で描く
+// 図（数直線・座標平面・図形・立体）を SVG で描く
 const Figure = (() => {
   const SVG_NS = 'http://www.w3.org/2000/svg';
   let clipCount = 0;
@@ -274,7 +274,231 @@ const Figure = (() => {
     return svg;
   }
 
+  // 立体：角柱・角錐・直方体・円柱・円錐・球を斜め上から見た形で描く（見えない辺は点線）
+  function solid(fig) {
+    const yaw = (-28 * Math.PI) / 180;
+    const pitch = (25 * Math.PI) / 180;
+    // 3D の点 (x, y, z)（y が上）を回転して、画面の点と奥行きを返す
+    function view([x, y, z]) {
+      const x1 = x * Math.cos(yaw) + z * Math.sin(yaw);
+      const z1 = -x * Math.sin(yaw) + z * Math.cos(yaw);
+      const y2 = y * Math.cos(pitch) - z1 * Math.sin(pitch);
+      const z2 = y * Math.sin(pitch) + z1 * Math.cos(pitch);
+      return [x1, y2, z2];
+    }
+    const shape = fig.shape;
+    const h = fig.h || 0;
+    const r = fig.r || 0;
+    const lines = []; // { a: [x,y], b: [x,y], hidden }
+    const paths = []; // { d (3D の点列), hidden }
+    const extra = []; // 補助線
+    const labelsAt = []; // { p: 3D の点, text }
+
+    // 多面体（角柱・角錐・直方体）
+    function polyhedron(verts, faces) {
+      const v = verts.map(view);
+      const faceVisible = faces.map((f) => {
+        const [a, b2, c] = f.map((i) => v[i]);
+        const nz = (b2[0] - a[0]) * (c[1] - a[1]) - (b2[1] - a[1]) * (c[0] - a[0]);
+        return nz > 0;
+      });
+      const edges = new Map();
+      faces.forEach((f, fi) => {
+        f.forEach((i, k) => {
+          const j = f[(k + 1) % f.length];
+          const key = i < j ? `${i}-${j}` : `${j}-${i}`;
+          const e = edges.get(key) || { i, j, visible: false };
+          e.visible = e.visible || faceVisible[fi];
+          edges.set(key, e);
+        });
+      });
+      edges.forEach((e) => lines.push({ a: v[e.i], b: v[e.j], hidden: !e.visible }));
+      return v;
+    }
+    const ring = (n, rad, y, offset) => Array.from({ length: n }, (_, k) => {
+      const t = offset + (2 * Math.PI * k) / n;
+      return [rad * Math.cos(t), y, rad * Math.sin(t)];
+    });
+    let verts = [];
+    if (shape === 'cuboid') {
+      const w = fig.w / 2;
+      const d = fig.d / 2;
+      verts = [[-w, 0, d], [w, 0, d], [w, 0, -d], [-w, 0, -d], [-w, h, d], [w, h, d], [w, h, -d], [-w, h, -d]];
+      polyhedron(verts, [[0, 3, 2, 1], [4, 5, 6, 7], [0, 1, 5, 4], [1, 2, 6, 5], [2, 3, 7, 6], [3, 0, 4, 7]]);
+      if (fig.labels) {
+        if (fig.labels.w) labelsAt.push({ p: [0, -0.18 * h, d], text: fig.labels.w });
+        if (fig.labels.d) labelsAt.push({ p: [w + 0.15 * fig.w, 0, 0], text: fig.labels.d });
+        if (fig.labels.h) labelsAt.push({ p: [w + 0.3 * fig.w, h / 2, d], text: fig.labels.h });
+      }
+    } else if (shape === 'prism' || shape === 'pyramid') {
+      const n = fig.sides || 4;
+      // 辺の数が奇数のときは頂点を手前に、偶数のときは辺を手前に向ける
+      const offset = n % 2 === 1 ? Math.PI / 2 : Math.PI / 2 + Math.PI / n;
+      const base = ring(n, r, 0, offset);
+      // 面は外から見て反時計回り（円周の点の並びが逆向きなので、面ごとに逆にする）
+      const flip = (faces) => faces.map((f) => [...f].reverse());
+      if (shape === 'prism') {
+        verts = [...base, ...ring(n, r, h, offset)];
+        const faces = [[...Array(n).keys()].reverse(), [...Array(n).keys()].map((k) => k + n)];
+        for (let k = 0; k < n; k += 1) faces.push([k, (k + 1) % n, ((k + 1) % n) + n, k + n]);
+        polyhedron(verts, flip(faces));
+      } else {
+        verts = [...base, [0, h, 0]];
+        const faces = [[...Array(n).keys()].reverse()];
+        for (let k = 0; k < n; k += 1) faces.push([k, (k + 1) % n, n]);
+        polyhedron(verts, flip(faces));
+      }
+      if (fig.labels && fig.labels.h) {
+        if (shape === 'pyramid') {
+          extra.push([[0, 0, 0], [0, h, 0]]);
+          labelsAt.push({ p: [0.12 * r, h * 0.4, 0], text: fig.labels.h, side: 'right' });
+        } else {
+          // 手前で右側の縦の辺の横に置く
+          const vv = base.map(view);
+          let best = 0;
+          vv.forEach((p, k) => { if (p[0] + p[2] * 0.3 > vv[best][0] + vv[best][2] * 0.3) best = k; });
+          labelsAt.push({ p: [base[best][0] * 1.25, h / 2, base[best][2] * 1.25], text: fig.labels.h });
+        }
+      }
+      if (fig.labels && fig.labels.a) {
+        // 手前の底辺の真ん中
+        let best = 0;
+        let bestZ = -Infinity;
+        for (let k = 0; k < n; k += 1) {
+          const m = base[k].map((c, i) => (c + base[(k + 1) % n][i]) / 2);
+          const z = view(m)[2];
+          if (z > bestZ) { bestZ = z; best = k; }
+        }
+        const m = base[best].map((c, i) => (c + base[(best + 1) % n][i]) / 2);
+        labelsAt.push({ p: [m[0] * 1.25, -0.08 * (h || r), m[2] * 1.25], text: fig.labels.a });
+      }
+    } else if (shape === 'cylinder' || shape === 'cone' || shape === 'sphere') {
+      const N = 72;
+      const circle = (y, rad) => Array.from({ length: N + 1 }, (_, k) => {
+        const t = (2 * Math.PI * k) / N;
+        return [rad * Math.cos(t), y, rad * Math.sin(t)];
+      });
+      // 手前半分は実線、奥半分は点線
+      const splitEllipse = (pts, hideBack) => {
+        let cur = [];
+        let curHidden = null;
+        pts.forEach((p3) => {
+          const hidden = hideBack && view(p3)[2] < 0;
+          if (curHidden !== null && hidden !== curHidden) {
+            paths.push({ pts: cur, hidden: curHidden });
+            cur = [cur[cur.length - 1]];
+          }
+          cur.push(p3);
+          curHidden = hidden;
+        });
+        paths.push({ pts: cur, hidden: curHidden });
+      };
+      // 画面上で左右のはしになる円周上の点
+      const sideAngles = () => {
+        let minT = 0;
+        let maxT = 0;
+        let minX = Infinity;
+        let maxX = -Infinity;
+        for (let k = 0; k < 360; k += 1) {
+          const t = (k * Math.PI) / 180;
+          const x = view([r * Math.cos(t), 0, r * Math.sin(t)])[0];
+          if (x < minX) { minX = x; minT = t; }
+          if (x > maxX) { maxX = x; maxT = t; }
+        }
+        return [minT, maxT];
+      };
+      if (shape === 'cylinder') {
+        splitEllipse(circle(0, r), true);
+        splitEllipse(circle(h, r), false);
+        sideAngles().forEach((t) => {
+          lines.push({ a: view([r * Math.cos(t), 0, r * Math.sin(t)]), b: view([r * Math.cos(t), h, r * Math.sin(t)]), hidden: false });
+        });
+        if (fig.labels && fig.labels.h) {
+          const t = sideAngles()[1];
+          labelsAt.push({ p: [r * Math.cos(t) * 1.3, h / 2, r * Math.sin(t) * 1.3], text: fig.labels.h });
+        }
+        if (fig.labels && fig.labels.r) {
+          extra.push([[0, h, 0], [r, h, 0]]);
+          labelsAt.push({ p: [r / 2, h + 0.08 * (h + r), 0], text: fig.labels.r });
+        }
+      } else if (shape === 'cone') {
+        splitEllipse(circle(0, r), true);
+        sideAngles().forEach((t) => {
+          lines.push({ a: view([r * Math.cos(t), 0, r * Math.sin(t)]), b: view([0, h, 0]), hidden: false });
+        });
+        if (fig.labels && fig.labels.h) {
+          extra.push([[0, 0, 0], [0, h, 0]]);
+          labelsAt.push({ p: [0.12 * r, h * 0.4, 0], text: fig.labels.h, side: 'right' });
+        }
+        if (fig.labels && fig.labels.r) {
+          extra.push([[0, 0, 0], [r, 0, 0]]);
+          labelsAt.push({ p: [r / 2, -0.12 * (h + r) / 2, 0], text: fig.labels.r });
+        }
+        if (fig.labels && fig.labels.l) {
+          const t = sideAngles()[1];
+          labelsAt.push({ p: [r * Math.cos(t) * 0.75, h / 2, r * Math.sin(t) * 0.75], text: fig.labels.l, side: 'right' });
+        }
+      } else {
+        // 球：輪郭の円と、赤道（奥半分は点線）
+        paths.push({ circle: true });
+        splitEllipse(circle(0, r), true);
+        if (fig.labels && fig.labels.r) {
+          extra.push([[0, 0, 0], [r, 0, 0]]);
+          labelsAt.push({ p: [r / 2, 0.12 * r, 0], text: fig.labels.r });
+        }
+      }
+    }
+
+    // 画面の範囲を決める
+    const all = [];
+    lines.forEach((l) => all.push(l.a, l.b));
+    paths.forEach((pth) => (pth.pts || []).forEach((p3) => all.push(view(p3))));
+    if (shape === 'sphere') all.push(view([0, r, 0]), view([0, -r, 0]), [-r, 0, 0], [r, 0, 0]);
+    labelsAt.forEach((l) => all.push(view(l.p)));
+    if (all.length === 0) return document.createComment('empty solid');
+    const minX = Math.min(...all.map((p3) => p3[0]));
+    const maxX = Math.max(...all.map((p3) => p3[0]));
+    const minY = Math.min(...all.map((p3) => p3[1]));
+    const maxY = Math.max(...all.map((p3) => p3[1]));
+    const scale = 200 / Math.max(maxX - minX, maxY - minY, 0.001);
+    const pad = 26;
+    const width = (maxX - minX) * scale + pad * 2;
+    const height = (maxY - minY) * scale + pad * 2;
+    const X = (p3) => (pad + (p3[0] - minX) * scale).toFixed(1);
+    const Y = (p3) => (pad + (maxY - p3[1]) * scale).toFixed(1);
+
+    const svg = svgEl('svg', {
+      class: 'figure solid',
+      viewBox: `0 0 ${width.toFixed(1)} ${height.toFixed(1)}`,
+      role: 'img',
+      'aria-label': '立体の図',
+    });
+    paths.forEach((pth) => {
+      if (pth.circle) {
+        const c = view([0, 0, 0]);
+        svg.append(svgEl('circle', { cx: X(c), cy: Y(c), r: (r * scale).toFixed(1), class: 'edge' }));
+        return;
+      }
+      const d = pth.pts.map((p3, k) => `${k ? 'L' : 'M'}${X(view(p3))} ${Y(view(p3))}`).join('');
+      svg.append(svgEl('path', { d, class: pth.hidden ? 'edge is-hidden' : 'edge' }));
+    });
+    lines.forEach((l) => {
+      svg.append(svgEl('line', { x1: X(l.a), y1: Y(l.a), x2: X(l.b), y2: Y(l.b), class: l.hidden ? 'edge is-hidden' : 'edge' }));
+    });
+    extra.forEach(([p1, p2]) => {
+      const a1 = view(p1);
+      const b1 = view(p2);
+      svg.append(svgEl('line', { x1: X(a1), y1: Y(a1), x2: X(b1), y2: Y(b1), class: 'edge is-aux' }));
+    });
+    labelsAt.forEach((l) => {
+      const p3 = view(l.p);
+      svg.append(svgEl('text', { x: X(p3), y: (Number(Y(p3)) + 4).toFixed(1), class: `solid-label${l.side === 'right' ? ' is-left' : ''}` }, l.text));
+    });
+    return svg;
+  }
+
   function render(fig) {
+    if (fig && fig.type === 'solid') return solid(fig);
     if (fig && fig.type === 'geometry') return geometry(fig);
     if (fig && fig.type === 'numberLine') return numberLine(fig);
     if (fig && fig.type === 'coordPlane') return coordPlane(fig);

@@ -870,3 +870,36 @@ a.button {
   font-size: 12px;
   fill: var(--accent);
 }
+
+/* 立体 */
+.solid {
+  max-width: 260px;
+}
+
+.solid .edge {
+  fill: none;
+  stroke: var(--text);
+  stroke-width: 1.8;
+  stroke-linejoin: round;
+}
+
+.solid .edge.is-hidden {
+  stroke-dasharray: 5 4;
+  stroke-width: 1.2;
+}
+
+.solid .edge.is-aux {
+  stroke: #c0392b;
+  stroke-dasharray: 3 3;
+  stroke-width: 1.2;
+}
+
+.solid .solid-label {
+  font-size: 13px;
+  fill: var(--accent);
+  text-anchor: middle;
+}
+
+.solid .solid-label.is-left {
+  text-anchor: start;
+}

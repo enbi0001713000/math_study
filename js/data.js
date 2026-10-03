@@ -154,6 +154,15 @@ const Data = (() => {
       if (typeof figure.min !== 'number' || typeof figure.max !== 'number' || figure.min >= figure.max) {
         console.warn(`[データ] ${label}: 数直線の min・max が正しくありません`);
       }
+    } else if (figure.type === 'solid') {
+      const shapes = ['cuboid', 'prism', 'pyramid', 'cylinder', 'cone', 'sphere'];
+      if (!shapes.includes(figure.shape)) {
+        console.warn(`[データ] ${label}: 立体の shape「${figure.shape}」には対応していません`);
+      }
+      const need = { cuboid: ['w', 'd', 'h'], prism: ['r', 'h'], pyramid: ['r', 'h'], cylinder: ['r', 'h'], cone: ['r', 'h'], sphere: ['r'] }[figure.shape] || [];
+      need.forEach((k) => {
+        if (!(typeof figure[k] === 'number' && figure[k] > 0)) console.warn(`[データ] ${label}: 立体の ${k} は正の数で書いてください`);
+      });
     } else if (figure.type === 'geometry') {
       const pts = figure.points || {};
       const known = (n) => Array.isArray(pts[n]) && pts[n].length === 2 && pts[n].every((v) => typeof v === 'number');
