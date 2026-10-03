@@ -816,3 +816,57 @@ a.button {
   fill: #c0392b;
   text-anchor: start;
 }
+
+/* 図形 */
+.geometry {
+  max-width: 320px;
+}
+
+.geometry .shape {
+  fill: #e8f0fd;
+  stroke: var(--text);
+  stroke-width: 1.8;
+}
+
+.geometry .circle {
+  fill: none;
+}
+
+.geometry .sector {
+  fill: #d6e4fb;
+}
+
+.geometry .segment {
+  stroke: var(--text);
+  stroke-width: 1.8;
+}
+
+.geometry .angle-mark {
+  fill: none;
+  stroke: #c0392b;
+  stroke-width: 1.5;
+}
+
+.geometry .vertex {
+  fill: var(--text);
+}
+
+.geometry text {
+  font-size: 14px;
+  text-anchor: middle;
+}
+
+.geometry .vertex-label {
+  font-weight: bold;
+  fill: var(--text);
+}
+
+.geometry .angle-label {
+  font-size: 12px;
+  fill: #c0392b;
+}
+
+.geometry .length-label {
+  font-size: 12px;
+  fill: var(--accent);
+}

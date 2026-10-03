@@ -154,6 +154,22 @@ const Data = (() => {
       if (typeof figure.min !== 'number' || typeof figure.max !== 'number' || figure.min >= figure.max) {
         console.warn(`[データ] ${label}: 数直線の min・max が正しくありません`);
       }
+    } else if (figure.type === 'geometry') {
+      const pts = figure.points || {};
+      const known = (n) => Array.isArray(pts[n]) && pts[n].length === 2 && pts[n].every((v) => typeof v === 'number');
+      Object.keys(pts).forEach((n) => {
+        if (!known(n)) console.warn(`[データ] ${label}: 図形の点 ${n} は [x, y] の数で書いてください`);
+      });
+      const names = [
+        ...(figure.segments || []).flat(),
+        ...(figure.polygons || []).flat(),
+        ...(figure.circles || []).map((c) => c.center),
+        ...(figure.sectors || []).map((c) => c.center),
+        ...(figure.angles || []).flatMap((a) => [a.vertex, a.from, a.to]),
+      ];
+      [...new Set(names)].forEach((n) => {
+        if (!(n in pts)) console.warn(`[データ] ${label}: 図形で使っている点 ${n} が points にありません`);
+      });
     } else if (figure.type === 'coordPlane') {
       if (typeof figure.min !== 'number' || typeof figure.max !== 'number' || figure.min >= 0 || figure.max <= 0) {
         console.warn(`[データ] ${label}: 座標平面の min・max が正しくありません（min は負、max は正）`);

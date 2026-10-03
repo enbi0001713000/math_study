@@ -18,6 +18,7 @@ const Keypad = (() => {
     y: ['y'],
     a: ['a'],
     b: ['b'],
+    pi: ['π'],
   };
 
   // 画面に並べる順番（行ごと）。使わないキーは空きにして、数字の並びを崩さない。
@@ -28,14 +29,17 @@ const Keypad = (() => {
     ['1', '2', '3', '+', '/'],
     ['0', '.', '-', '<', '>'],
     ['x', 'y', 'a', 'b', '='],
+    ['π', '', '', '', ''],
   ];
 
   const LABELS = { '-': '−', '*': '×', '^': '指数', '/': '分数' };
   const SHOWN = { '-': '−', '*': '×' };
 
   const isLetter = (c) => /[a-z]/.test(c);
-  // 数字・小数点・文字のまとまり（分数の分子・分母になれる）
-  const isNumberChar = (c) => /[\d.a-z]/.test(c);
+  // 数字・小数点・文字・π のまとまり（分数の分子・分母になれる）
+  const isNumberChar = (c) => /[\d.a-zπ]/.test(c);
+  // キーボードで打てない文字の代わり
+  const KEYBOARD_ALIAS = { p: 'π' };
 
   let active = null;
 
@@ -200,6 +204,7 @@ const Keypad = (() => {
         if (event.key === 'Backspace' && hasDelete) remove();
         else if (event.key === 'Enter') submit();
         else if (enabled.has(event.key)) input(event.key);
+        else if (enabled.has(KEYBOARD_ALIAS[event.key])) input(KEYBOARD_ALIAS[event.key]);
         else return false;
         return true;
       },
