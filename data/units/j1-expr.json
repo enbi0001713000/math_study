@@ -1,0 +1,569 @@
+{
+  "id": "j1-expr",
+  "sections": [
+    {
+      "id": "s1",
+      "name": "文字を使った式",
+      "explanation": [
+        {"type": "text", "text": "数量を文字を使って表すと、いろいろな場合を1つの式にまとめて表せます。"},
+        {"type": "math", "text": "1個 x 円のりんごを3個買ったときの代金：x×3（円）"},
+        {"type": "math", "text": "a 円持っていて b 円使ったときの残り：a−b（円）"},
+        {"type": "text", "text": "文字を使った式では、かけ算の記号×を省き、数を文字の前に書きます。x×3 は 3x と書きます（くわしくは次の小単元で学びます）。"},
+        {"type": "text", "text": "この単元の問題では、答えに単位はつけません。項を書く順番を指定する問題では、その順に答えます。"}
+      ]
+    },
+    {
+      "id": "s2",
+      "name": "文字式の表し方",
+      "explanation": [
+        {"type": "text", "text": "文字式は、次のきまりにしたがって書きます。"},
+        {"type": "text", "text": "① ×を省き、数を文字の前に書く"},
+        {"type": "math", "text": "x×5 = 5x"},
+        {"type": "text", "text": "② 文字どうしはアルファベット順に書く"},
+        {"type": "math", "text": "b×a = ab"},
+        {"type": "text", "text": "③ 1 や −1 は書かない"},
+        {"type": "math", "text": "1×a = a、(−1)×a = −a"},
+        {"type": "text", "text": "④ 同じ文字の積は指数で書く"},
+        {"type": "math", "text": "a×a = a²"},
+        {"type": "text", "text": "⑤ ÷は使わず、分数の形で書く"},
+        {"type": "math", "text": "x÷4 = x/4（4分の x）"},
+        {"type": "text", "text": "⑥ かっこのまとまりはそのまま、数を前に書く"},
+        {"type": "math", "text": "(x+y)×3 = 3(x+y)"},
+        {"type": "text", "text": "キーパッドでは、分数は「分子 → 分数 → 分母」、指数は「文字 → 指数 → 数」の順に押します。"}
+      ]
+    },
+    {
+      "id": "s3",
+      "name": "式の値",
+      "explanation": [
+        {"type": "text", "text": "式の中の文字を数におきかえることを代入といい、代入して計算した結果を式の値といいます。"},
+        {"type": "text", "text": "負の数を代入するときは、かっこをつけて代入します。"},
+        {"type": "math", "text": "x = −3 のとき　2x+5 = 2×(−3)+5 = −6+5 = −1"},
+        {"type": "math", "text": "a = −2 のとき　a² = (−2)² = 4"},
+        {"type": "math", "text": "a = −2 のとき　−a = −(−2) = 2"}
+      ]
+    },
+    {
+      "id": "s4",
+      "name": "項と係数、1次式の加法・減法",
+      "explanation": [
+        {"type": "text", "text": "2x−5 は 2x+(−5) と考えられます。このとき、2x と −5 を式の項といい、2x の 2 を x の係数といいます。"},
+        {"type": "text", "text": "2x−5 のように、文字が1つだけの項（1次の項）と数の項でできた式を1次式といいます。"},
+        {"type": "text", "text": "文字の部分が同じ項は、係数どうしを計算して1つにまとめられます。"},
+        {"type": "math", "text": "3x+5x = (3+5)x = 8x"},
+        {"type": "math", "text": "4a−a = (4−1)a = 3a"},
+        {"type": "text", "text": "1次式のたし算はかっこをそのままはずし、ひき算はひく式の各項の符号を変えてかっこをはずします。"},
+        {"type": "math", "text": "(2x+3)+(x−5) = 2x+3+x−5 = 3x−2"},
+        {"type": "math", "text": "(5x+1)−(2x−4) = 5x+1−2x+4 = 3x+5"},
+        {"type": "text", "text": "答えは、文字の項、数の項の順に書きます。"}
+      ]
+    },
+    {
+      "id": "s5",
+      "name": "1次式と数の乗法・除法",
+      "explanation": [
+        {"type": "text", "text": "項と数のかけ算・わり算は、係数と数を計算します。"},
+        {"type": "math", "text": "4×5x = 20x　　(−2)×3a = −6a"},
+        {"type": "math", "text": "12x÷4 = 3x　　18a÷(−3) = −6a"},
+        {"type": "text", "text": "1次式と数のかけ算は、分配法則を使って、かっこの中のそれぞれの項に数をかけます。"},
+        {"type": "math", "text": "3(2x−4) = 3×2x+3×(−4) = 6x−12"},
+        {"type": "math", "text": "−(x−3) = −x+3"},
+        {"type": "text", "text": "1次式を数でわるときは、それぞれの項を数でわります。"},
+        {"type": "math", "text": "(8x+6)÷2 = 8x÷2+6÷2 = 4x+3"}
+      ]
+    },
+    {
+      "id": "s6",
+      "name": "関係を表す式",
+      "explanation": [
+        {"type": "text", "text": "等号＝を使って、2つの数量が等しい関係を表した式を等式といいます。等号の左側を左辺、右側を右辺といいます。"},
+        {"type": "math", "text": "1個 x 円のパン3個の代金が y 円：y = 3x"},
+        {"type": "text", "text": "不等号を使って、2つの数量の大小関係を表した式を不等式といいます。"},
+        {"type": "math", "text": "a は b より大きい：a > b　　a は b より小さい（未満）：a < b"},
+        {"type": "text", "text": "「以上」「以下」を表す不等号（≧、≦）もありますが、この単元の問題では「より大きい」「より小さい」だけを使います。"}
+      ]
+    }
+  ],
+  "problems": [
+    {
+      "id": "j1-expr-s1-e01",
+      "section": "s1",
+      "role": "example",
+      "question": "1本 a 円のペンを5本買ったときの代金を、文字式で表しなさい。",
+      "answers": ["5a"],
+      "hints": [],
+      "solution": "代金は a×5 です。×を省き、数を前に書くと 5a です。",
+      "figure": null
+    },
+    {
+      "id": "j1-expr-s1-c01",
+      "section": "s1",
+      "role": "check",
+      "question": "1個 x 円のパン2個と、120円のジュース1本を買ったときの代金の合計を、文字式で表しなさい。（文字の項、数の項の順に答えなさい）",
+      "answers": ["2x+120"],
+      "hints": ["パン2個の代金は x×2 = 2x です。", "パンの代金とジュースの代金をたします。"],
+      "solution": "パン2個で 2x 円、ジュースが 120 円なので、合計は 2x+120 です。",
+      "figure": null
+    },
+    {
+      "id": "j1-expr-s1-c02",
+      "section": "s1",
+      "role": "check",
+      "question": "1000円札を出して、1冊 a 円のノートを3冊買ったときのおつりを、文字式で表しなさい。",
+      "answers": ["1000-3a", "-3a+1000"],
+      "hints": ["ノート3冊の代金は 3a 円です。", "おつりは、出したお金から代金をひきます。"],
+      "solution": "ノート3冊の代金は 3a 円なので、おつりは 1000−3a です。",
+      "figure": null
+    },
+    {
+      "id": "j1-expr-s1-t01",
+      "section": "s1",
+      "role": "test",
+      "question": "1辺が x cm の正方形のまわりの長さを、文字式で表しなさい。",
+      "answers": ["4x"],
+      "hints": ["正方形には、長さの等しい辺が4つあります。", "x×4 を文字式で書きます。"],
+      "solution": "まわりの長さは x×4 なので、4x です。",
+      "figure": null
+    },
+    {
+      "id": "j1-expr-s1-t02",
+      "section": "s1",
+      "role": "test",
+      "question": "1個 a 円のりんご4個と、1個 b 円のみかん6個を買ったときの代金の合計を、文字式で表しなさい。（a の項、b の項の順に答えなさい）",
+      "answers": ["4a+6b"],
+      "hints": ["りんごの代金は 4a 円、みかんの代金は 6b 円です。", "2つの代金をたします。"],
+      "solution": "りんご4個で 4a 円、みかん6個で 6b 円なので、合計は 4a+6b です。",
+      "figure": null
+    },
+    {
+      "id": "j1-expr-s1-t03",
+      "section": "s1",
+      "role": "test",
+      "question": "x 人の生徒が、1人150円ずつ出し合ったときの合計金額を、文字式で表しなさい。",
+      "answers": ["150x"],
+      "hints": ["合計は 150×x です。", "×を省き、数を文字の前に書きます。"],
+      "solution": "合計金額は 150×x なので、150x です。",
+      "figure": null
+    },
+    {
+      "id": "j1-expr-s1-t04",
+      "section": "s1",
+      "role": "test",
+      "question": "時速 x km で3時間進んだときの道のりを、文字式で表しなさい。",
+      "answers": ["3x"],
+      "hints": ["道のり ＝ 速さ×時間 です。", "x×3 を文字式で書きます。"],
+      "solution": "道のりは x×3 なので、3x です。",
+      "figure": null
+    },
+    {
+      "id": "j1-expr-s1-t05",
+      "section": "s1",
+      "role": "test",
+      "question": "a 円の品物を、200円引きで買ったときの代金を、文字式で表しなさい。",
+      "answers": ["a-200", "-200+a"],
+      "hints": ["「200円引き」は、もとの値段から 200 円をひくことです。", "a から 200 をひいた式を書きます。"],
+      "solution": "もとの値段 a 円から 200 円をひくので、a−200 です。",
+      "figure": null
+    },
+    {
+      "id": "j1-expr-s2-e01",
+      "section": "s2",
+      "role": "example",
+      "question": "a×7×b を、文字式の表し方にしたがって表しなさい。",
+      "answers": ["7ab"],
+      "hints": [],
+      "solution": "×を省き、数を前に、文字はアルファベット順に書きます。a×7×b = 7ab",
+      "figure": null
+    },
+    {
+      "id": "j1-expr-s2-c01",
+      "section": "s2",
+      "role": "check",
+      "question": "x×(−1)×y を、文字式の表し方にしたがって表しなさい。",
+      "answers": ["-xy"],
+      "hints": ["(−1) をかけると、符号が「−」になります。", "1 は書かずに、−xy と書きます。"],
+      "solution": "x×(−1)×y = −xy（1 は書きません）",
+      "figure": null
+    },
+    {
+      "id": "j1-expr-s2-c02",
+      "section": "s2",
+      "role": "check",
+      "question": "y×y×y×5 を、文字式の表し方にしたがって表しなさい。",
+      "answers": ["5y^3"],
+      "hints": ["同じ文字の積は、指数を使って書きます。", "y×y×y = y³ です。数を前に書きます。"],
+      "solution": "y×y×y×5 = 5y³",
+      "figure": null
+    },
+    {
+      "id": "j1-expr-s2-t01",
+      "section": "s2",
+      "role": "test",
+      "question": "b×a×4 を、文字式の表し方にしたがって表しなさい。",
+      "answers": ["4ab"],
+      "hints": ["数を文字の前に書きます。", "文字はアルファベット順に並べます。"],
+      "solution": "b×a×4 = 4ab",
+      "figure": null
+    },
+    {
+      "id": "j1-expr-s2-t02",
+      "section": "s2",
+      "role": "test",
+      "question": "x÷6 を、文字式の表し方にしたがって表しなさい。",
+      "answers": ["x/6"],
+      "hints": ["÷は使わずに、分数の形で書きます。", "x が分子、6 が分母になります。"],
+      "solution": "x÷6 = x/6（6分の x）",
+      "figure": null
+    },
+    {
+      "id": "j1-expr-s2-t03",
+      "section": "s2",
+      "role": "test",
+      "question": "a×a×(−3) を、文字式の表し方にしたがって表しなさい。",
+      "answers": ["-3a^2"],
+      "hints": ["a×a は指数を使って a² と書きます。", "数の −3 を前に書きます。"],
+      "solution": "a×a×(−3) = −3a²",
+      "figure": null
+    },
+    {
+      "id": "j1-expr-s2-t04",
+      "section": "s2",
+      "role": "test",
+      "question": "(x+y)×2 を、文字式の表し方にしたがって表しなさい。",
+      "answers": ["2(x+y)"],
+      "hints": ["かっこのまとまりは、そのまま残します。", "数をかっこの前に書きます。"],
+      "solution": "(x+y)×2 = 2(x+y)",
+      "figure": null
+    },
+    {
+      "id": "j1-expr-s2-t05",
+      "section": "s2",
+      "role": "test",
+      "question": "3×x−y÷2 を、文字式の表し方にしたがって表しなさい。",
+      "answers": ["3x-y/2"],
+      "hints": ["3×x と y÷2 を、それぞれ文字式で書きます。", "y÷2 は分数の形 y/2 で書きます。"],
+      "solution": "3×x = 3x、y÷2 = y/2 なので、3x−y/2 です。",
+      "figure": null
+    },
+    {
+      "id": "j1-expr-s3-e01",
+      "section": "s3",
+      "role": "example",
+      "question": "x = 4 のとき、3x−7 の値を求めなさい。",
+      "answers": ["5"],
+      "hints": [],
+      "solution": "x に 4 を代入します。\n3x−7 = 3×4−7 = 12−7 = 5",
+      "figure": null
+    },
+    {
+      "id": "j1-expr-s3-c01",
+      "section": "s3",
+      "role": "check",
+      "question": "a = −5 のとき、−2a+1 の値を求めなさい。",
+      "answers": ["11"],
+      "hints": ["負の数は、かっこをつけて代入します。", "−2×(−5)+1 を計算します。"],
+      "solution": "−2a+1 = −2×(−5)+1 = 10+1 = 11",
+      "figure": null
+    },
+    {
+      "id": "j1-expr-s3-c02",
+      "section": "s3",
+      "role": "check",
+      "question": "x = −3 のとき、x² の値を求めなさい。",
+      "answers": ["9"],
+      "hints": ["x² = x×x です。", "(−3)² を計算します。"],
+      "solution": "x² = (−3)² = (−3)×(−3) = 9",
+      "figure": null
+    },
+    {
+      "id": "j1-expr-s3-t01",
+      "section": "s3",
+      "role": "test",
+      "question": "x = 6 のとき、5−2x の値を求めなさい。",
+      "answers": ["-7"],
+      "hints": ["x に 6 を代入します。", "5−2×6 を計算します。"],
+      "solution": "5−2x = 5−2×6 = 5−12 = −7",
+      "figure": null
+    },
+    {
+      "id": "j1-expr-s3-t02",
+      "section": "s3",
+      "role": "test",
+      "question": "a = −4 のとき、3a+10 の値を求めなさい。",
+      "answers": ["-2"],
+      "hints": ["負の数は、かっこをつけて代入します。", "3×(−4)+10 を計算します。"],
+      "solution": "3a+10 = 3×(−4)+10 = −12+10 = −2",
+      "figure": null
+    },
+    {
+      "id": "j1-expr-s3-t03",
+      "section": "s3",
+      "role": "test",
+      "question": "x = −2 のとき、−x² の値を求めなさい。",
+      "answers": ["-4"],
+      "hints": ["−x² は、x² に「−」をつけた式です。", "x² = (−2)² = 4 です。"],
+      "solution": "−x² = −(−2)² = −4",
+      "figure": null
+    },
+    {
+      "id": "j1-expr-s3-t04",
+      "section": "s3",
+      "role": "test",
+      "question": "a = 3、b = −2 のとき、2a+b の値を求めなさい。",
+      "answers": ["4"],
+      "hints": ["a に 3、b に −2 を代入します。", "2×3+(−2) を計算します。"],
+      "solution": "2a+b = 2×3+(−2) = 6−2 = 4",
+      "figure": null
+    },
+    {
+      "id": "j1-expr-s3-t05",
+      "section": "s3",
+      "role": "test",
+      "question": "x = −6 のとき、x²−4x の値を求めなさい。",
+      "answers": ["60"],
+      "hints": ["(−6)² と 4×(−6) をそれぞれ計算します。", "(−6)² = 36、4×(−6) = −24 です。"],
+      "solution": "x²−4x = (−6)²−4×(−6) = 36+24 = 60",
+      "figure": null
+    },
+    {
+      "id": "j1-expr-s4-e01",
+      "section": "s4",
+      "role": "example",
+      "question": "7x+2x を計算しなさい。",
+      "answers": ["9x"],
+      "hints": [],
+      "solution": "x の項どうしなので、係数をたします。\n7x+2x = (7+2)x = 9x",
+      "figure": null
+    },
+    {
+      "id": "j1-expr-s4-c01",
+      "section": "s4",
+      "role": "check",
+      "question": "6a−4−2a+9 を計算しなさい。（文字の項、数の項の順に答えなさい）",
+      "answers": ["4a+5"],
+      "hints": ["a の項どうし、数の項どうしをまとめます。", "6a−2a と −4+9 を計算します。"],
+      "solution": "6a−4−2a+9 = 6a−2a−4+9 = 4a+5",
+      "figure": null
+    },
+    {
+      "id": "j1-expr-s4-c02",
+      "section": "s4",
+      "role": "check",
+      "question": "(3x+2)−(x−6) を計算しなさい。（文字の項、数の項の順に答えなさい）",
+      "answers": ["2x+8"],
+      "hints": ["ひく式のかっこをはずすときは、各項の符号を変えます。", "3x+2−x+6 を計算します。"],
+      "solution": "(3x+2)−(x−6) = 3x+2−x+6 = 2x+8",
+      "figure": null
+    },
+    {
+      "id": "j1-expr-s4-t01",
+      "section": "s4",
+      "role": "test",
+      "question": "1次式 5x−8 で、x の係数を答えなさい。",
+      "answers": ["5"],
+      "hints": ["係数は、文字にかけられている数です。", "5x の 5 が x の係数です。"],
+      "solution": "5x−8 の項は 5x と −8 で、x の係数は 5 です。",
+      "figure": null
+    },
+    {
+      "id": "j1-expr-s4-t02",
+      "section": "s4",
+      "role": "test",
+      "question": "4x−9x を計算しなさい。",
+      "answers": ["-5x"],
+      "hints": ["x の項どうしなので、係数を計算します。", "4−9 を計算します。"],
+      "solution": "4x−9x = (4−9)x = −5x",
+      "figure": null
+    },
+    {
+      "id": "j1-expr-s4-t03",
+      "section": "s4",
+      "role": "test",
+      "question": "(2a+7)+(3a−4) を計算しなさい。（文字の項、数の項の順に答えなさい）",
+      "answers": ["5a+3"],
+      "hints": ["たし算は、かっこをそのままはずします。", "2a+3a と 7−4 を計算します。"],
+      "solution": "(2a+7)+(3a−4) = 2a+7+3a−4 = 5a+3",
+      "figure": null
+    },
+    {
+      "id": "j1-expr-s4-t04",
+      "section": "s4",
+      "role": "test",
+      "question": "(6x−1)−(4x+3) を計算しなさい。（文字の項、数の項の順に答えなさい）",
+      "answers": ["2x-4"],
+      "hints": ["ひく式のかっこをはずすときは、各項の符号を変えます。", "6x−1−4x−3 を計算します。"],
+      "solution": "(6x−1)−(4x+3) = 6x−1−4x−3 = 2x−4",
+      "figure": null
+    },
+    {
+      "id": "j1-expr-s4-t05",
+      "section": "s4",
+      "role": "test",
+      "question": "−x+8+3x−10 を計算しなさい。（文字の項、数の項の順に答えなさい）",
+      "answers": ["2x-2"],
+      "hints": ["x の項どうし、数の項どうしをまとめます。", "−x+3x と 8−10 を計算します。"],
+      "solution": "−x+8+3x−10 = −x+3x+8−10 = 2x−2",
+      "figure": null
+    },
+    {
+      "id": "j1-expr-s5-e01",
+      "section": "s5",
+      "role": "example",
+      "question": "5(x+3) を計算しなさい。（文字の項、数の項の順に答えなさい）",
+      "answers": ["5x+15"],
+      "hints": [],
+      "solution": "分配法則で、かっこの中のそれぞれの項に 5 をかけます。\n5(x+3) = 5×x+5×3 = 5x+15",
+      "figure": null
+    },
+    {
+      "id": "j1-expr-s5-c01",
+      "section": "s5",
+      "role": "check",
+      "question": "−3(2a−1) を計算しなさい。（文字の項、数の項の順に答えなさい）",
+      "answers": ["-6a+3"],
+      "hints": ["かっこの中のそれぞれの項に −3 をかけます。", "(−3)×2a と (−3)×(−1) を計算します。"],
+      "solution": "−3(2a−1) = (−3)×2a+(−3)×(−1) = −6a+3",
+      "figure": null
+    },
+    {
+      "id": "j1-expr-s5-c02",
+      "section": "s5",
+      "role": "check",
+      "question": "(12x−8)÷4 を計算しなさい。（文字の項、数の項の順に答えなさい）",
+      "answers": ["3x-2"],
+      "hints": ["それぞれの項を 4 でわります。", "12x÷4 と (−8)÷4 を計算します。"],
+      "solution": "(12x−8)÷4 = 12x÷4−8÷4 = 3x−2",
+      "figure": null
+    },
+    {
+      "id": "j1-expr-s5-t01",
+      "section": "s5",
+      "role": "test",
+      "question": "6×(−4x) を計算しなさい。",
+      "answers": ["-24x"],
+      "hints": ["係数どうしをかけます。", "6×(−4) を計算します。"],
+      "solution": "6×(−4x) = 6×(−4)×x = −24x",
+      "figure": null
+    },
+    {
+      "id": "j1-expr-s5-t02",
+      "section": "s5",
+      "role": "test",
+      "question": "18a÷(−3) を計算しなさい。",
+      "answers": ["-6a"],
+      "hints": ["係数を −3 でわります。", "18÷(−3) を計算します。"],
+      "solution": "18a÷(−3) = 18÷(−3)×a = −6a",
+      "figure": null
+    },
+    {
+      "id": "j1-expr-s5-t03",
+      "section": "s5",
+      "role": "test",
+      "question": "2(3x−5) を計算しなさい。（文字の項、数の項の順に答えなさい）",
+      "answers": ["6x-10"],
+      "hints": ["かっこの中のそれぞれの項に 2 をかけます。", "2×3x と 2×(−5) を計算します。"],
+      "solution": "2(3x−5) = 2×3x+2×(−5) = 6x−10",
+      "figure": null
+    },
+    {
+      "id": "j1-expr-s5-t04",
+      "section": "s5",
+      "role": "test",
+      "question": "−(4x−7) を計算しなさい。（文字の項、数の項の順に答えなさい）",
+      "answers": ["-4x+7"],
+      "hints": ["かっこの前の「−」は、−1 をかけることと同じです。", "かっこの中の各項の符号を変えます。"],
+      "solution": "−(4x−7) = −4x+7",
+      "figure": null
+    },
+    {
+      "id": "j1-expr-s5-t05",
+      "section": "s5",
+      "role": "test",
+      "question": "3(x+2)+2(x−1) を計算しなさい。（文字の項、数の項の順に答えなさい）",
+      "answers": ["5x+4"],
+      "hints": ["まず、それぞれのかっこをはずします。", "3x+6+2x−2 を計算します。"],
+      "solution": "3(x+2)+2(x−1) = 3x+6+2x−2 = 5x+4",
+      "figure": null
+    },
+    {
+      "id": "j1-expr-s6-e01",
+      "section": "s6",
+      "role": "example",
+      "question": "1本 x 円の鉛筆を5本買ったときの代金は y 円でした。y を x の式で表し、「y=」の形の等式で答えなさい。",
+      "answers": ["y=5x"],
+      "hints": [],
+      "solution": "代金は 5x 円で、これが y 円と等しいので、y=5x です。",
+      "figure": null
+    },
+    {
+      "id": "j1-expr-s6-c01",
+      "section": "s6",
+      "role": "check",
+      "question": "a 個のあめを、1人に3個ずつ b 人に配ると、2個余りました。a を b の式で表し、「a=」の形の等式で答えなさい。（b の項、数の項の順に答えなさい）",
+      "answers": ["a=3b+2"],
+      "hints": ["配ったあめの数は 3b 個です。", "あめの数 a は、配った数と余った数の合計です。"],
+      "solution": "配ったあめは 3b 個、余りが 2 個なので、a=3b+2 です。",
+      "figure": null
+    },
+    {
+      "id": "j1-expr-s6-c02",
+      "section": "s6",
+      "role": "check",
+      "question": "x の2倍は、10 より大きい。この関係を不等式で表しなさい。（左に 2x を書きなさい）",
+      "answers": ["2x>10"],
+      "hints": ["x の2倍は 2x です。", "「より大きい」は不等号 > で表します。"],
+      "solution": "x の2倍は 2x で、10 より大きいので、2x>10 です。",
+      "figure": null
+    },
+    {
+      "id": "j1-expr-s6-t01",
+      "section": "s6",
+      "role": "test",
+      "question": "1個 a 円のケーキを4個買ったときの代金は、1200円でした。この関係を等式で表しなさい。（左に代金を表す式を書きなさい）",
+      "answers": ["4a=1200"],
+      "hints": ["ケーキ4個の代金は 4a 円です。", "代金が 1200 円と等しいことを、等号で表します。"],
+      "solution": "代金は 4a 円で、これが 1200 円と等しいので、4a=1200 です。",
+      "figure": null
+    },
+    {
+      "id": "j1-expr-s6-t02",
+      "section": "s6",
+      "role": "test",
+      "question": "1000円で x 円の本を買うと、おつりは y 円でした。y を x の式で表し、「y=」の形の等式で答えなさい。",
+      "answers": ["y=1000-x", "y=-x+1000"],
+      "hints": ["おつりは、出したお金から本の代金をひきます。", "おつり y は 1000−x と等しくなります。"],
+      "solution": "おつりは 1000−x 円なので、y=1000−x です。",
+      "figure": null
+    },
+    {
+      "id": "j1-expr-s6-t03",
+      "section": "s6",
+      "role": "test",
+      "question": "x から 5 をひいた数は、3 より小さい。この関係を不等式で表しなさい。（左に x−5 を書きなさい）",
+      "answers": ["x-5<3"],
+      "hints": ["x から 5 をひいた数は x−5 です。", "「より小さい」は不等号 < で表します。"],
+      "solution": "x から 5 をひいた数は x−5 で、3 より小さいので、x−5<3 です。",
+      "figure": null
+    },
+    {
+      "id": "j1-expr-s6-t04",
+      "section": "s6",
+      "role": "test",
+      "question": "1冊 a 円のノート2冊と、1本 b 円のペン1本の代金の合計は、500円より安い。この関係を不等式で表しなさい。（左に代金の合計を、a の項、b の項の順に書きなさい）",
+      "answers": ["2a+b<500"],
+      "hints": ["ノート2冊で 2a 円、ペン1本で b 円です。", "「より安い」は、代金の合計が 500 より小さいということです。"],
+      "solution": "代金の合計は 2a+b 円で、500 円より安いので、2a+b<500 です。",
+      "figure": null
+    },
+    {
+      "id": "j1-expr-s6-t05",
+      "section": "s6",
+      "role": "test",
+      "question": "縦 x cm、横 y cm の長方形の面積は、24 cm² です。この関係を等式で表しなさい。（左に面積を表す式を書きなさい）",
+      "answers": ["xy=24"],
+      "hints": ["長方形の面積 ＝ 縦×横 です。", "x×y を文字式で書くと xy です。"],
+      "solution": "面積は x×y = xy で、これが 24 と等しいので、xy=24 です。",
+      "figure": null
+    }
+  ]
+}
