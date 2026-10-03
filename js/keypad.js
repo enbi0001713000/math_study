@@ -13,20 +13,29 @@ const Keypad = (() => {
     frac: ['/'],
     lt: ['<'],
     gt: ['>'],
+    eq: ['='],
+    x: ['x'],
+    y: ['y'],
+    a: ['a'],
+    b: ['b'],
   };
 
-  // 画面に並べる順番（使わないキーは詰める）
+  // 画面に並べる順番（行ごと）。使わないキーは空きにして、数字の並びを崩さない。
+  // 1つも使うキーがない行は表示しない
   const LAYOUT = [
-    '7', '8', '9', '(', ')',
-    '4', '5', '6', '*', '^',
-    '1', '2', '3', '+', '/',
-    '0', '.', '-', '<', '>',
+    ['7', '8', '9', '(', ')'],
+    ['4', '5', '6', '*', '^'],
+    ['1', '2', '3', '+', '/'],
+    ['0', '.', '-', '<', '>'],
+    ['x', 'y', 'a', 'b', '='],
   ];
 
   const LABELS = { '-': '−', '*': '×', '^': '指数', '/': '分数' };
   const SHOWN = { '-': '−', '*': '×' };
 
-  const isNumberChar = (c) => /[\d.]/.test(c);
+  const isLetter = (c) => /[a-z]/.test(c);
+  // 数字・小数点・文字のまとまり（分数の分子・分母になれる）
+  const isNumberChar = (c) => /[\d.a-z]/.test(c);
 
   let active = null;
 
@@ -37,15 +46,30 @@ const Keypad = (() => {
     return node;
   }
 
-  // 位置 from から続く数字・小数点の並びを返す
+  // 位置 from から続く数字・小数点・文字の並びを返す
   function readNumber(tokens, from) {
     let end = from;
     while (end < tokens.length && isNumberChar(tokens[end])) end += 1;
     return tokens.slice(from, end).join('');
   }
 
+  // 指数は数字だけ（a^2 の「2」）
+  function readDigits(tokens, from) {
+    let end = from;
+    while (end < tokens.length && /\d/.test(tokens[end])) end += 1;
+    return tokens.slice(from, end).join('');
+  }
+
+  // 数字はそのまま、文字はイタリックで表示する
+  function termNodes(text) {
+    return [...text].map((c) => (isLetter(c) ? el('i', 'kp-var', c) : document.createTextNode(c)));
+  }
+
   function slot(text) {
-    return text === '' ? el('span', 'kp-slot') : document.createTextNode(text);
+    const box = document.createDocumentFragment();
+    if (text === '') box.append(el('span', 'kp-slot'));
+    else box.append(...termNodes(text));
+    return box;
   }
 
   // 入力中の答えを、指数は右上、分数は上下に重ねて表示する
@@ -68,10 +92,10 @@ const Keypad = (() => {
           frac.append(top, bottom);
           nodes.push(frac);
         } else {
-          nodes.push(document.createTextNode(num));
+          nodes.push(...termNodes(num));
         }
       } else if (t === '^') {
-        const exp = readNumber(tokens, i + 1);
+        const exp = readDigits(tokens, i + 1);
         i += 1 + exp.length;
         const sup = el('sup', 'kp-sup');
         sup.append(slot(exp));
@@ -119,7 +143,7 @@ const Keypad = (() => {
     function input(c) {
       if (disabled || !enabled.has(c)) return;
       const prev = tokens[tokens.length - 1];
-      // 分数は数字のあと、指数は数字か「)」のあとにだけ置ける
+      // 分数は数字・文字のあと、指数は数字・文字か「)」のあとにだけ置ける
       if (c === '/' && !(prev && isNumberChar(prev))) return;
       if (c === '^' && !(prev && (isNumberChar(prev) || prev === ')'))) return;
       tokens.push(c);
@@ -145,10 +169,18 @@ const Keypad = (() => {
       return button;
     }
 
-    LAYOUT.filter((c) => enabled.has(c)).forEach((c) => {
-      const className = /\d/.test(c) ? 'is-digit' : 'is-symbol';
-      const button = addKey(LABELS[c] || c, className, () => input(c));
-      if (LABELS[c] && LABELS[c].length > 1) button.classList.add('is-word');
+    LAYOUT.filter((row) => row.some((c) => enabled.has(c))).forEach((row) => {
+      row.forEach((c) => {
+        if (!enabled.has(c)) {
+          grid.append(el('span', 'kp-gap'));
+          return;
+        }
+        let className = 'is-symbol';
+        if (/\d/.test(c)) className = 'is-digit';
+        else if (isLetter(c)) className = 'is-letter';
+        const button = addKey(LABELS[c] || c, className, () => input(c));
+        if (LABELS[c] && LABELS[c].length > 1) button.classList.add('is-word');
+      });
     });
     if (hasDelete) addKey('削除', 'is-delete', remove);
     addKey(submitLabel, 'is-submit', submit);

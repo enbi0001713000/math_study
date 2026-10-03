@@ -436,6 +436,17 @@ a.button {
   background: var(--bg);
 }
 
+.kp-key.is-letter {
+  font-family: "Times New Roman", serif;
+  font-style: italic;
+  font-size: 1.4rem;
+}
+
+.kp-var {
+  font-family: "Times New Roman", serif;
+  padding: 0 1px;
+}
+
 .kp-key.is-word {
   font-size: 0.875rem;
 }
