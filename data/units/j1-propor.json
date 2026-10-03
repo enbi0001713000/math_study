@@ -1,0 +1,553 @@
+{
+  "id": "j1-propor",
+  "sections": [
+    {
+      "id": "s1",
+      "name": "比例の式",
+      "explanation": [
+        {"type": "text", "text": "ともなって変わる2つの数量 x、y があって、x の値を決めると y の値がただ1つに決まるとき、y は x の関数であるといいます。"},
+        {"type": "text", "text": "y が x の関数で、y = ax（a は 0 でない定数）の式で表されるとき、y は x に比例するといい、a を比例定数といいます。"},
+        {"type": "text", "text": "比例では、x の値が2倍、3倍、…になると、y の値も2倍、3倍、…になります。"},
+        {"type": "text", "text": "比例の式は、y = ax に x と y の値を代入して a を求めます。"},
+        {"type": "math", "text": "x = 3 のとき y = 12 → 12 = a×3 → a = 4 → y = 4x"},
+        {"type": "text", "text": "この単元では、式を「y=4x」の形で答えます。"}
+      ]
+    },
+    {
+      "id": "s2",
+      "name": "座標",
+      "explanation": [
+        {"type": "text", "text": "横の数直線を x 軸、たての数直線を y 軸、2つの交わる点を原点 O といいます。"},
+        {"type": "text", "text": "点の位置は、x 座標と y 座標の組で (3, 2) のように表します。これを点の座標といいます。点 A(3, 2) は、原点から右へ3、上へ2進んだ位置にあります。"},
+        {"type": "figure", "figure": {"type": "coordPlane", "min": -6, "max": 6, "points": [{"label": "A", "x": 3, "y": 2}, {"label": "B", "x": -4, "y": -3}], "graphs": []}},
+        {"type": "math", "text": "A(3, 2)　　B(−4, −3)"},
+        {"type": "text", "text": "左や下の方向は、負の数で表します。"}
+      ]
+    },
+    {
+      "id": "s3",
+      "name": "比例のグラフ",
+      "explanation": [
+        {"type": "text", "text": "比例 y = ax のグラフは、原点を通る直線です。"},
+        {"type": "text", "text": "a > 0 のときは右上がり、a < 0 のときは右下がりの直線になります。"},
+        {"type": "figure", "figure": {"type": "coordPlane", "min": -6, "max": 6, "points": [{"label": "A", "x": 2, "y": 4}, {"label": "B", "x": 3, "y": -3}], "graphs": [{"kind": "linear", "a": 2}, {"kind": "linear", "a": -1}]}},
+        {"type": "math", "text": "y = 2x は A(2, 4) を通る右上がりの直線"},
+        {"type": "math", "text": "y = −x は B(3, −3) を通る右下がりの直線"},
+        {"type": "text", "text": "グラフから式を求めるときは、グラフが通る点の座標を読み取り、y = ax に代入して a を求めます。"}
+      ]
+    },
+    {
+      "id": "s4",
+      "name": "反比例の式",
+      "explanation": [
+        {"type": "text", "text": "y が x の関数で、y = a/x（a は 0 でない定数）の式で表されるとき、y は x に反比例するといい、a を比例定数といいます。"},
+        {"type": "text", "text": "反比例では、x の値が2倍、3倍、…になると、y の値は 1/2倍、1/3倍、…になります。また、x と y の積 xy は一定で、比例定数 a に等しくなります。"},
+        {"type": "math", "text": "x = 3 のとき y = 4 → a = 3×4 = 12 → y = 12/x"},
+        {"type": "text", "text": "キーパッドでは、y=12/x は「y → = → 1 → 2 → 分数 → x」の順に押します。"}
+      ]
+    },
+    {
+      "id": "s5",
+      "name": "反比例のグラフ",
+      "explanation": [
+        {"type": "text", "text": "反比例 y = a/x のグラフは、2つのなめらかな曲線になります。これを双曲線といいます。グラフは x 軸とも y 軸とも交わりません。"},
+        {"type": "figure", "figure": {"type": "coordPlane", "min": -6, "max": 6, "points": [{"label": "P", "x": 2, "y": 3}, {"label": "Q", "x": -2, "y": -3}], "graphs": [{"kind": "inverse", "a": 6}]}},
+        {"type": "math", "text": "y = 6/x は P(2, 3) や Q(−2, −3) を通る"},
+        {"type": "text", "text": "a > 0 のときは右上と左下、a < 0 のときは左上と右下に曲線があります。"},
+        {"type": "text", "text": "グラフから式を求めるときは、グラフが通る点の座標を読み取り、a = xy で比例定数を求めます。"}
+      ]
+    },
+    {
+      "id": "s6",
+      "name": "比例と反比例の利用",
+      "explanation": [
+        {"type": "text", "text": "身のまわりには、比例や反比例の関係になっている数量がたくさんあります。"},
+        {"type": "text", "text": "例：同じ紙の枚数と重さは比例します。10枚で40gなら、1枚4gなので y = 4x です。"},
+        {"type": "text", "text": "例：決まった道のりを進むとき、速さと時間は反比例します。1200mを分速 x m で y 分かかるとき、y = 1200/x です。"},
+        {"type": "text", "text": "比例か反比例かを見分けて式をつくり、値を代入して答えを求めます。"}
+      ]
+    }
+  ],
+  "problems": [
+    {
+      "id": "j1-propor-s1-e01",
+      "section": "s1",
+      "role": "example",
+      "question": "y は x に比例し、x = 2 のとき y = 10 です。y を x の式で表しなさい。（y=○ の形で答えなさい）",
+      "answers": ["y=5x"],
+      "hints": [],
+      "solution": "y = ax に x = 2、y = 10 を代入します。\n10 = a×2　a = 5　よって y=5x",
+      "figure": null
+    },
+    {
+      "id": "j1-propor-s1-c01",
+      "section": "s1",
+      "role": "check",
+      "question": "y は x に比例し、x = 4 のとき y = −12 です。y を x の式で表しなさい。（y=○ の形で答えなさい）",
+      "answers": ["y=-3x"],
+      "hints": ["y = ax に x と y の値を代入します。", "−12 = a×4 から a を求めます。"],
+      "solution": "−12 = a×4　a = −3　よって y=−3x",
+      "figure": null
+    },
+    {
+      "id": "j1-propor-s1-c02",
+      "section": "s1",
+      "role": "check",
+      "question": "y = 6x で、x = −3 のときの y の値を求めなさい。",
+      "answers": ["-18"],
+      "hints": ["x に −3 を代入します。", "6×(−3) を計算します。"],
+      "solution": "y = 6×(−3) = −18",
+      "figure": null
+    },
+    {
+      "id": "j1-propor-s1-t01",
+      "section": "s1",
+      "role": "test",
+      "question": "y は x に比例し、x = 5 のとき y = 20 です。y を x の式で表しなさい。（y=○ の形で答えなさい）",
+      "answers": ["y=4x"],
+      "hints": ["y = ax に x と y の値を代入します。", "20 = a×5 から a を求めます。"],
+      "solution": "20 = a×5　a = 4　よって y=4x",
+      "figure": null
+    },
+    {
+      "id": "j1-propor-s1-t02",
+      "section": "s1",
+      "role": "test",
+      "question": "y は x に比例し、x = −2 のとき y = 14 です。y を x の式で表しなさい。（y=○ の形で答えなさい）",
+      "answers": ["y=-7x"],
+      "hints": ["y = ax に x と y の値を代入します。", "14 = a×(−2) から a を求めます。"],
+      "solution": "14 = a×(−2)　a = −7　よって y=−7x",
+      "figure": null
+    },
+    {
+      "id": "j1-propor-s1-t03",
+      "section": "s1",
+      "role": "test",
+      "question": "比例 y = −4x の比例定数を答えなさい。",
+      "answers": ["-4"],
+      "hints": ["y = ax の a が比例定数です。", "x にかけられている数を答えます。"],
+      "solution": "y = −4x の比例定数は −4 です。",
+      "figure": null
+    },
+    {
+      "id": "j1-propor-s1-t04",
+      "section": "s1",
+      "role": "test",
+      "question": "y は x に比例し、x = 3 のとき y = 6 です。x = −5 のときの y の値を求めなさい。",
+      "answers": ["-10"],
+      "hints": ["まず、y を x の式で表します。", "y = 2x に x = −5 を代入します。"],
+      "solution": "6 = a×3 より a = 2 なので y = 2x。\nx = −5 のとき y = 2×(−5) = −10",
+      "figure": null
+    },
+    {
+      "id": "j1-propor-s1-t05",
+      "section": "s1",
+      "role": "test",
+      "question": "1m の重さが 80g の針金があります。この針金 x m の重さを y g とするとき、y を x の式で表しなさい。（y=○ の形で答えなさい）",
+      "answers": ["y=80x"],
+      "hints": ["針金の長さが2倍、3倍になると、重さも2倍、3倍になります。", "重さ ＝ 1m の重さ×長さ です。"],
+      "solution": "重さは 80×x なので、y=80x です。",
+      "figure": null
+    },
+    {
+      "id": "j1-propor-s2-e01",
+      "section": "s2",
+      "role": "example",
+      "question": "図の点 A の x 座標を答えなさい。",
+      "answers": ["4"],
+      "hints": [],
+      "solution": "点 A は原点から右へ4、上へ3の位置にあるので、A(4, 3) です。x 座標は 4 です。",
+      "figure": {"type": "coordPlane", "min": -6, "max": 6, "points": [{"label": "A", "x": 4, "y": 3}], "graphs": []}
+    },
+    {
+      "id": "j1-propor-s2-c01",
+      "section": "s2",
+      "role": "check",
+      "question": "図の点 B の y 座標を答えなさい。",
+      "answers": ["5"],
+      "hints": ["y 座標は、上下の位置を表します。", "原点から上へいくつ進んだかを数えます。"],
+      "solution": "点 B は B(−2, 5) なので、y 座標は 5 です。",
+      "figure": {"type": "coordPlane", "min": -6, "max": 6, "points": [{"label": "B", "x": -2, "y": 5}], "graphs": []}
+    },
+    {
+      "id": "j1-propor-s2-c02",
+      "section": "s2",
+      "role": "check",
+      "question": "図の点 C の x 座標を答えなさい。",
+      "answers": ["-5"],
+      "hints": ["x 座標は、左右の位置を表します。", "原点より左にあるときは負の数です。"],
+      "solution": "点 C は C(−5, −3) なので、x 座標は −5 です。",
+      "figure": {"type": "coordPlane", "min": -6, "max": 6, "points": [{"label": "C", "x": -5, "y": -3}], "graphs": []}
+    },
+    {
+      "id": "j1-propor-s2-t01",
+      "section": "s2",
+      "role": "test",
+      "question": "図の点 P の y 座標を答えなさい。",
+      "answers": ["-4"],
+      "hints": ["原点より下にあるときは、y 座標は負の数です。", "原点から下へいくつ進んだかを数えます。"],
+      "solution": "点 P は P(3, −4) なので、y 座標は −4 です。",
+      "figure": {"type": "coordPlane", "min": -6, "max": 6, "points": [{"label": "P", "x": 3, "y": -4}], "graphs": []}
+    },
+    {
+      "id": "j1-propor-s2-t02",
+      "section": "s2",
+      "role": "test",
+      "question": "図の点 Q の x 座標を答えなさい。",
+      "answers": ["-4"],
+      "hints": ["原点より左にあるときは、x 座標は負の数です。", "原点から左へいくつ進んだかを数えます。"],
+      "solution": "点 Q は Q(−4, 2) なので、x 座標は −4 です。",
+      "figure": {"type": "coordPlane", "min": -6, "max": 6, "points": [{"label": "Q", "x": -4, "y": 2}], "graphs": []}
+    },
+    {
+      "id": "j1-propor-s2-t03",
+      "section": "s2",
+      "role": "test",
+      "question": "点 (2, −6) と x 軸について対称な点の y 座標を答えなさい。",
+      "answers": ["6"],
+      "hints": ["x 軸について対称な点は、x 軸で折り返した位置にあります。", "x 座標はそのままで、y 座標の符号が変わります。"],
+      "solution": "x 軸について対称な点は (2, 6) なので、y 座標は 6 です。",
+      "figure": null
+    },
+    {
+      "id": "j1-propor-s2-t04",
+      "section": "s2",
+      "role": "test",
+      "question": "図の点 R の y 座標を答えなさい。",
+      "answers": ["0"],
+      "hints": ["点 R は x 軸の上にあります。", "x 軸の上の点は、上下に動いていません。"],
+      "solution": "点 R は R(5, 0) なので、y 座標は 0 です。",
+      "figure": {"type": "coordPlane", "min": -6, "max": 6, "points": [{"label": "R", "x": 5, "y": 0}], "graphs": []}
+    },
+    {
+      "id": "j1-propor-s2-t05",
+      "section": "s2",
+      "role": "test",
+      "question": "点 (−3, 4) を、右へ5、下へ2だけ動かした点の x 座標を答えなさい。",
+      "answers": ["2"],
+      "hints": ["右へ動かすと、x 座標が増えます。", "−3+5 を計算します。"],
+      "solution": "動かした点は (−3+5, 4−2) = (2, 2) なので、x 座標は 2 です。",
+      "figure": null
+    },
+    {
+      "id": "j1-propor-s3-e01",
+      "section": "s3",
+      "role": "example",
+      "question": "図の直線は、比例のグラフです。y を x の式で表しなさい。（y=○ の形で答えなさい）",
+      "answers": ["y=2x"],
+      "hints": [],
+      "solution": "グラフは点 A(2, 4) を通ります。y = ax に代入すると、4 = a×2 より a = 2。よって y=2x",
+      "figure": {"type": "coordPlane", "min": -6, "max": 6, "points": [{"label": "A", "x": 2, "y": 4}], "graphs": [{"kind": "linear", "a": 2}]}
+    },
+    {
+      "id": "j1-propor-s3-c01",
+      "section": "s3",
+      "role": "check",
+      "question": "図の直線は、比例のグラフです。y を x の式で表しなさい。（y=○ の形で答えなさい）",
+      "answers": ["y=-3x"],
+      "hints": ["グラフが通る点 A の座標を読み取ります。", "A(1, −3) を y = ax に代入します。"],
+      "solution": "グラフは点 A(1, −3) を通るので、−3 = a×1 より a = −3。よって y=−3x",
+      "figure": {"type": "coordPlane", "min": -6, "max": 6, "points": [{"label": "A", "x": 1, "y": -3}], "graphs": [{"kind": "linear", "a": -3}]}
+    },
+    {
+      "id": "j1-propor-s3-c02",
+      "section": "s3",
+      "role": "check",
+      "question": "比例 y = 4x のグラフ上にあって、x 座標が 2 である点の y 座標を答えなさい。",
+      "answers": ["8"],
+      "hints": ["グラフ上の点の座標は、式を成り立たせます。", "y = 4x に x = 2 を代入します。"],
+      "solution": "y = 4×2 = 8 なので、y 座標は 8 です。",
+      "figure": null
+    },
+    {
+      "id": "j1-propor-s3-t01",
+      "section": "s3",
+      "role": "test",
+      "question": "図の直線は、比例のグラフです。y を x の式で表しなさい。（y=○ の形で答えなさい）",
+      "answers": ["y=x"],
+      "hints": ["グラフが通る点 A の座標を読み取ります。", "A(3, 3) を y = ax に代入します。"],
+      "solution": "グラフは点 A(3, 3) を通るので、3 = a×3 より a = 1。よって y=x（1 は書きません）",
+      "figure": {"type": "coordPlane", "min": -6, "max": 6, "points": [{"label": "A", "x": 3, "y": 3}], "graphs": [{"kind": "linear", "a": 1}]}
+    },
+    {
+      "id": "j1-propor-s3-t02",
+      "section": "s3",
+      "role": "test",
+      "question": "図の直線は、比例のグラフです。y を x の式で表しなさい。（y=○ の形で答えなさい）",
+      "answers": ["y=-2x"],
+      "hints": ["グラフが通る点 A の座標を読み取ります。", "A(2, −4) を y = ax に代入します。"],
+      "solution": "グラフは点 A(2, −4) を通るので、−4 = a×2 より a = −2。よって y=−2x",
+      "figure": {"type": "coordPlane", "min": -6, "max": 6, "points": [{"label": "A", "x": 2, "y": -4}], "graphs": [{"kind": "linear", "a": -2}]}
+    },
+    {
+      "id": "j1-propor-s3-t03",
+      "section": "s3",
+      "role": "test",
+      "question": "比例 y = ax のグラフが点 (2, 10) を通るとき、a の値を求めなさい。",
+      "answers": ["5"],
+      "hints": ["点の座標を y = ax に代入します。", "10 = a×2 から a を求めます。"],
+      "solution": "10 = a×2 より a = 5 です。",
+      "figure": null
+    },
+    {
+      "id": "j1-propor-s3-t04",
+      "section": "s3",
+      "role": "test",
+      "question": "図の直線は、比例のグラフです。y を x の式で表しなさい。（y=○ の形で答えなさい）",
+      "answers": ["y=3x"],
+      "hints": ["グラフが通る点 A の座標を読み取ります。", "A(2, 6) を y = ax に代入します。"],
+      "solution": "グラフは点 A(2, 6) を通るので、6 = a×2 より a = 3。よって y=3x",
+      "figure": {"type": "coordPlane", "min": -6, "max": 6, "points": [{"label": "A", "x": 2, "y": 6}], "graphs": [{"kind": "linear", "a": 3}]}
+    },
+    {
+      "id": "j1-propor-s3-t05",
+      "section": "s3",
+      "role": "test",
+      "question": "次の比例のグラフのうち、右下がりの直線になるものを番号で答えなさい。① y = 2x　② y = −5x　③ y = x",
+      "answers": ["2"],
+      "hints": ["比例定数の符号に注目します。", "比例定数が負のとき、グラフは右下がりです。"],
+      "solution": "比例定数が負なのは ② y = −5x だけなので、右下がりになるのは②です。",
+      "figure": null
+    },
+    {
+      "id": "j1-propor-s4-e01",
+      "section": "s4",
+      "role": "example",
+      "question": "y は x に反比例し、x = 2 のとき y = 9 です。y を x の式で表しなさい。（y=○ の形で答えなさい）",
+      "answers": ["y=18/x"],
+      "hints": [],
+      "solution": "反比例では a = xy なので、a = 2×9 = 18。よって y=18/x",
+      "figure": null
+    },
+    {
+      "id": "j1-propor-s4-c01",
+      "section": "s4",
+      "role": "check",
+      "question": "y は x に反比例し、x = −4 のとき y = 3 です。y を x の式で表しなさい。（y=○ の形で答えなさい）",
+      "answers": ["y=-12/x"],
+      "hints": ["比例定数 a は、x と y の積です。", "a = (−4)×3 を計算します。"],
+      "solution": "a = (−4)×3 = −12 なので、y=−12/x",
+      "figure": null
+    },
+    {
+      "id": "j1-propor-s4-c02",
+      "section": "s4",
+      "role": "check",
+      "question": "y = 24/x で、x = 6 のときの y の値を求めなさい。",
+      "answers": ["4"],
+      "hints": ["x に 6 を代入します。", "24÷6 を計算します。"],
+      "solution": "y = 24÷6 = 4",
+      "figure": null
+    },
+    {
+      "id": "j1-propor-s4-t01",
+      "section": "s4",
+      "role": "test",
+      "question": "y は x に反比例し、x = 5 のとき y = 4 です。y を x の式で表しなさい。（y=○ の形で答えなさい）",
+      "answers": ["y=20/x"],
+      "hints": ["比例定数 a は、x と y の積です。", "a = 5×4 を計算します。"],
+      "solution": "a = 5×4 = 20 なので、y=20/x",
+      "figure": null
+    },
+    {
+      "id": "j1-propor-s4-t02",
+      "section": "s4",
+      "role": "test",
+      "question": "y は x に反比例し、x = −3 のとき y = −6 です。y を x の式で表しなさい。（y=○ の形で答えなさい）",
+      "answers": ["y=18/x"],
+      "hints": ["比例定数 a は、x と y の積です。", "a = (−3)×(−6) を計算します。"],
+      "solution": "a = (−3)×(−6) = 18 なので、y=18/x",
+      "figure": null
+    },
+    {
+      "id": "j1-propor-s4-t03",
+      "section": "s4",
+      "role": "test",
+      "question": "反比例 y = −30/x の比例定数を答えなさい。",
+      "answers": ["-30"],
+      "hints": ["y = a/x の a が比例定数です。", "分子の数を答えます。"],
+      "solution": "y = −30/x の比例定数は −30 です。",
+      "figure": null
+    },
+    {
+      "id": "j1-propor-s4-t04",
+      "section": "s4",
+      "role": "test",
+      "question": "y は x に反比例し、x = 2 のとき y = 8 です。x = −4 のときの y の値を求めなさい。",
+      "answers": ["-4"],
+      "hints": ["まず、比例定数 a = xy を求めます。", "y = 16/x に x = −4 を代入します。"],
+      "solution": "a = 2×8 = 16 なので y = 16/x。\nx = −4 のとき y = 16÷(−4) = −4",
+      "figure": null
+    },
+    {
+      "id": "j1-propor-s4-t05",
+      "section": "s4",
+      "role": "test",
+      "question": "面積が 36cm² の長方形の、縦の長さを x cm、横の長さを y cm とします。y を x の式で表しなさい。（y=○ の形で答えなさい）",
+      "answers": ["y=36/x"],
+      "hints": ["縦×横 ＝ 面積 なので、xy = 36 です。", "y を x の式で表すと、反比例の式になります。"],
+      "solution": "xy = 36 なので、y=36/x です。",
+      "figure": null
+    },
+    {
+      "id": "j1-propor-s5-e01",
+      "section": "s5",
+      "role": "example",
+      "question": "図の曲線は、反比例のグラフです。y を x の式で表しなさい。（y=○ の形で答えなさい）",
+      "answers": ["y=8/x"],
+      "hints": [],
+      "solution": "グラフは点 P(2, 4) を通ります。a = xy = 2×4 = 8 なので、y=8/x",
+      "figure": {"type": "coordPlane", "min": -6, "max": 6, "points": [{"label": "P", "x": 2, "y": 4}], "graphs": [{"kind": "inverse", "a": 8}]}
+    },
+    {
+      "id": "j1-propor-s5-c01",
+      "section": "s5",
+      "role": "check",
+      "question": "図の曲線は、反比例のグラフです。y を x の式で表しなさい。（y=○ の形で答えなさい）",
+      "answers": ["y=-6/x"],
+      "hints": ["グラフが通る点 P の座標を読み取ります。", "a = xy で比例定数を求めます。"],
+      "solution": "グラフは点 P(−2, 3) を通ります。a = (−2)×3 = −6 なので、y=−6/x",
+      "figure": {"type": "coordPlane", "min": -6, "max": 6, "points": [{"label": "P", "x": -2, "y": 3}], "graphs": [{"kind": "inverse", "a": -6}]}
+    },
+    {
+      "id": "j1-propor-s5-c02",
+      "section": "s5",
+      "role": "check",
+      "question": "反比例 y = 12/x のグラフ上にあって、x 座標が 3 である点の y 座標を答えなさい。",
+      "answers": ["4"],
+      "hints": ["グラフ上の点の座標は、式を成り立たせます。", "y = 12/x に x = 3 を代入します。"],
+      "solution": "y = 12÷3 = 4 なので、y 座標は 4 です。",
+      "figure": null
+    },
+    {
+      "id": "j1-propor-s5-t01",
+      "section": "s5",
+      "role": "test",
+      "question": "図の曲線は、反比例のグラフです。y を x の式で表しなさい。（y=○ の形で答えなさい）",
+      "answers": ["y=6/x"],
+      "hints": ["グラフが通る点 P の座標を読み取ります。", "a = xy で比例定数を求めます。"],
+      "solution": "グラフは点 P(3, 2) を通ります。a = 3×2 = 6 なので、y=6/x",
+      "figure": {"type": "coordPlane", "min": -6, "max": 6, "points": [{"label": "P", "x": 3, "y": 2}], "graphs": [{"kind": "inverse", "a": 6}]}
+    },
+    {
+      "id": "j1-propor-s5-t02",
+      "section": "s5",
+      "role": "test",
+      "question": "図の曲線は、反比例のグラフです。y を x の式で表しなさい。（y=○ の形で答えなさい）",
+      "answers": ["y=-4/x"],
+      "hints": ["グラフが通る点 P の座標を読み取ります。", "a = xy で比例定数を求めます。"],
+      "solution": "グラフは点 P(1, −4) を通ります。a = 1×(−4) = −4 なので、y=−4/x",
+      "figure": {"type": "coordPlane", "min": -6, "max": 6, "points": [{"label": "P", "x": 1, "y": -4}], "graphs": [{"kind": "inverse", "a": -4}]}
+    },
+    {
+      "id": "j1-propor-s5-t03",
+      "section": "s5",
+      "role": "test",
+      "question": "反比例 y = a/x のグラフが点 (4, 5) を通るとき、a の値を求めなさい。",
+      "answers": ["20"],
+      "hints": ["反比例では、a = xy です。", "4×5 を計算します。"],
+      "solution": "a = 4×5 = 20 です。",
+      "figure": null
+    },
+    {
+      "id": "j1-propor-s5-t04",
+      "section": "s5",
+      "role": "test",
+      "question": "反比例 y = −10/x のグラフ上にあって、x 座標が −2 である点の y 座標を答えなさい。",
+      "answers": ["5"],
+      "hints": ["y = −10/x に x = −2 を代入します。", "(−10)÷(−2) を計算します。"],
+      "solution": "y = (−10)÷(−2) = 5 なので、y 座標は 5 です。",
+      "figure": null
+    },
+    {
+      "id": "j1-propor-s5-t05",
+      "section": "s5",
+      "role": "test",
+      "question": "反比例 y = 8/x のグラフ上の点のうち、x 座標と y 座標がどちらも正の整数である点はいくつありますか。",
+      "answers": ["4"],
+      "hints": ["x 座標が 8 の約数のとき、y 座標が整数になります。", "8 の正の約数は 1、2、4、8 です。"],
+      "solution": "x = 1、2、4、8 のとき y = 8、4、2、1 となるので、点は4つです。",
+      "figure": null
+    },
+    {
+      "id": "j1-propor-s6-e01",
+      "section": "s6",
+      "role": "example",
+      "question": "同じ紙が10枚で40gです。この紙150枚の重さは何gですか。（数だけで答えなさい）",
+      "answers": ["600"],
+      "hints": [],
+      "solution": "紙の枚数と重さは比例します。1枚の重さは 40÷10 = 4（g）なので、x 枚の重さ y g は y = 4x。\nx = 150 のとき y = 4×150 = 600",
+      "figure": null
+    },
+    {
+      "id": "j1-propor-s6-c01",
+      "section": "s6",
+      "role": "check",
+      "question": "水そうに水を入れます。毎分6Lずつ入れると、いっぱいになるまで20分かかります。毎分8Lずつ入れると、何分でいっぱいになりますか。（数だけで答えなさい）",
+      "answers": ["15"],
+      "hints": ["水そうに入る水の量は 6×20 = 120（L）です。", "1分間に入れる量と時間は反比例します。"],
+      "solution": "水の量は 6×20 = 120（L）です。毎分 x L で y 分かかるとすると y = 120/x。\nx = 8 のとき y = 120÷8 = 15",
+      "figure": null
+    },
+    {
+      "id": "j1-propor-s6-c02",
+      "section": "s6",
+      "role": "check",
+      "question": "歯の数が24の歯車 A が1分間に5回転するとき、A とかみ合っている歯の数が40の歯車 B は、1分間に何回転しますか。（数だけで答えなさい）",
+      "answers": ["3"],
+      "hints": ["かみ合う歯車では、（歯の数）×（回転数）が等しくなります。", "A では 24×5 = 120 です。"],
+      "solution": "1分間にかみ合う歯の数は 24×5 = 120 です。B の歯の数を x、回転数を y とすると y = 120/x。\nx = 40 のとき y = 120÷40 = 3",
+      "figure": null
+    },
+    {
+      "id": "j1-propor-s6-t01",
+      "section": "s6",
+      "role": "test",
+      "question": "針金5mの重さは120gです。この針金8mの重さは何gですか。（数だけで答えなさい）",
+      "answers": ["192"],
+      "hints": ["針金の長さと重さは比例します。", "1m の重さは 120÷5 = 24（g）です。"],
+      "solution": "1m の重さは 24g なので、y = 24x。\nx = 8 のとき y = 24×8 = 192",
+      "figure": null
+    },
+    {
+      "id": "j1-propor-s6-t02",
+      "section": "s6",
+      "role": "test",
+      "question": "家から1200m離れた図書館まで歩きます。分速60mで歩くと、何分かかりますか。（数だけで答えなさい）",
+      "answers": ["20"],
+      "hints": ["道のりが一定のとき、速さと時間は反比例します。", "時間 ＝ 道のり÷速さ です。"],
+      "solution": "分速 x m で y 分かかるとすると y = 1200/x。\nx = 60 のとき y = 1200÷60 = 20",
+      "figure": null
+    },
+    {
+      "id": "j1-propor-s6-t03",
+      "section": "s6",
+      "role": "test",
+      "question": "時速40kmで進むと3時間かかる道のりがあります。同じ道のりを時速60kmで進むと、何時間かかりますか。（数だけで答えなさい）",
+      "answers": ["2"],
+      "hints": ["道のりは 40×3 = 120（km）です。", "速さと時間は反比例します。"],
+      "solution": "道のりは 40×3 = 120（km）です。時速 x km で y 時間かかるとすると y = 120/x。\nx = 60 のとき y = 120÷60 = 2",
+      "figure": null
+    },
+    {
+      "id": "j1-propor-s6-t04",
+      "section": "s6",
+      "role": "test",
+      "question": "ガソリン1Lで15km走る自動車があります。ガソリン x L で走る道のりを y km とするとき、y を x の式で表しなさい。（y=○ の形で答えなさい）",
+      "answers": ["y=15x"],
+      "hints": ["ガソリンの量が2倍、3倍になると、走る道のりも2倍、3倍になります。", "道のり ＝ 15×ガソリンの量 です。"],
+      "solution": "走る道のりは 15×x なので、y=15x です。",
+      "figure": null
+    },
+    {
+      "id": "j1-propor-s6-t05",
+      "section": "s6",
+      "role": "test",
+      "question": "12人で作業すると15日かかる仕事があります。同じ仕事を20人で作業すると、何日かかりますか。（1人が1日にする仕事の量は同じとします）（数だけで答えなさい）",
+      "answers": ["9"],
+      "hints": ["仕事の全体の量は 12×15 = 180（人・日）です。", "人数と日数は反比例します。"],
+      "solution": "仕事の量は 12×15 = 180 です。x 人で y 日かかるとすると y = 180/x。\nx = 20 のとき y = 180÷20 = 9",
+      "figure": null
+    }
+  ]
+}

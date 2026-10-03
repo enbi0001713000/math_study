@@ -527,6 +527,7 @@
         wrapper.append(el('div', { class: 'card' }, [
           el('p', { class: 'problem-label', text: meta }),
           el('p', { class: 'problem-question', text: item.problem.question }),
+          ...(item.problem.figure ? [el('div', { class: 'block-figure' }, [Figure.render(item.problem.figure)])] : []),
           retry,
         ]));
         return wrapper;
