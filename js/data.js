@@ -154,6 +154,16 @@ const Data = (() => {
       if (typeof figure.min !== 'number' || typeof figure.max !== 'number' || figure.min >= figure.max) {
         console.warn(`[データ] ${label}: 数直線の min・max が正しくありません`);
       }
+    } else if (figure.type === 'histogram') {
+      if (typeof figure.start !== 'number' || !(figure.width > 0) || !Array.isArray(figure.freq)
+        || !figure.freq.every((f) => Number.isInteger(f) && f >= 0)) {
+        console.warn(`[データ] ${label}: ヒストグラムには start・width（正の数）と freq（0以上の整数の配列）が必要です`);
+      }
+    } else if (figure.type === 'table') {
+      const cols = (figure.headers || []).length;
+      if (!cols || !Array.isArray(figure.rows) || figure.rows.some((r) => !Array.isArray(r) || r.length !== cols)) {
+        console.warn(`[データ] ${label}: 表の headers と、各行の列の数がそろっていません`);
+      }
     } else if (figure.type === 'solid') {
       const shapes = ['cuboid', 'prism', 'pyramid', 'cylinder', 'cone', 'sphere'];
       if (!shapes.includes(figure.shape)) {
