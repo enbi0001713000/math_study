@@ -1,0 +1,466 @@
+{
+  "id": "j1-plane",
+  "sections": [
+    {
+      "id": "s1",
+      "name": "直線と角",
+      "explanation": [
+        {"type": "text", "text": "まっすぐに限りなくのびた線を直線、直線の一部で両端のあるものを線分、一方の端だけがあるものを半直線といいます。"},
+        {"type": "text", "text": "1つの点から出る2つの半直線がつくる図形を角といい、頂点を真ん中にして ∠AOB のように表します。"},
+        {"type": "text", "text": "一直線がつくる角は 180°、点のまわり1周は 360° です。これを使うと、わからない角の大きさを求められます。"},
+        {"type": "figure", "figure": {"type": "geometry", "points": {"A": [-4, 0], "B": [4, 0], "O": [0, 0], "C": [2.475, 2.475]}, "segments": [["A", "B"], ["O", "C"]], "angles": [{"vertex": "O", "from": "B", "to": "C", "label": "45°"}, {"vertex": "O", "from": "C", "to": "A", "label": "x"}]}},
+        {"type": "math", "text": "∠x = 180°−45° = 135°"},
+        {"type": "text", "text": "2つの直線が垂直に交わるとき、できる角は 90° です。また、点 P から直線 ℓ にひいた垂線の長さを、点 P と直線 ℓ との距離といいます。"},
+        {"type": "text", "text": "この単元では、角の大きさは「135」のように数だけで答えます（°は書きません）。"}
+      ]
+    },
+    {
+      "id": "s2",
+      "name": "図形の移動",
+      "explanation": [
+        {"type": "text", "text": "図形を、形と大きさを変えずにほかの位置に移すことを移動といいます。移動の前と後で、対応する辺の長さや角の大きさは等しくなります。"},
+        {"type": "text", "text": "平行移動：図形を一定の方向に一定の距離だけずらす移動です。対応する点を結ぶ線分は、どれも平行で長さが等しくなります。"},
+        {"type": "text", "text": "回転移動：図形を1つの点（回転の中心）を中心にして、一定の角度だけ回す移動です。対応する点は、回転の中心から等しい距離にあります。180° の回転移動を点対称移動といいます。"},
+        {"type": "text", "text": "対称移動：図形を1つの直線（対称の軸）を折り目にして折り返す移動です。対称の軸は、対応する点を結ぶ線分の垂直二等分線になります。"}
+      ]
+    },
+    {
+      "id": "s3",
+      "name": "基本の作図とその性質",
+      "explanation": [
+        {"type": "text", "text": "定規とコンパスだけを使って図をかくことを作図といいます。"},
+        {"type": "text", "text": "線分 AB の垂直二等分線：A、B を中心に同じ半径の円をかき、2つの交点を結びます。垂直二等分線上の点は、A と B から等しい距離にあります。"},
+        {"type": "text", "text": "角の二等分線：角の頂点を中心に円をかき、2辺との交点からそれぞれ同じ半径の円をかいて、その交点と頂点を結びます。角の二等分線上の点は、角の2辺から等しい距離にあります。"},
+        {"type": "math", "text": "∠AOB = 80° の二等分線 OC → ∠AOC = 80°÷2 = 40°"},
+        {"type": "text", "text": "垂線：直線上にない点 P から直線にひいた垂直な直線です。垂直二等分線や垂線は、もとの直線と 90° で交わります。"}
+      ]
+    },
+    {
+      "id": "s4",
+      "name": "円の性質",
+      "explanation": [
+        {"type": "text", "text": "円の中心と円周上の点を結ぶ線分を半径、中心を通る弦を直径といいます。直径は半径の2倍で、円の弦の中でいちばん長くなります。"},
+        {"type": "text", "text": "円周の一部を弧、円周上の2点を結ぶ線分を弦といいます。1つの円では、弧の長さは中心角の大きさに比例します。"},
+        {"type": "text", "text": "円と直線が1点だけで交わるとき、この直線を円の接線、交わる点を接点といいます。円の接線は、接点を通る半径に垂直です。"},
+        {"type": "figure", "figure": {"type": "geometry", "points": {"O": [0, 0], "A": [0, 3], "P": [5, 3], "Q": [-3, 3]}, "circles": [{"center": "O", "r": 3}], "segments": [["O", "A"], ["Q", "P"]], "angles": [{"vertex": "A", "from": "O", "to": "P", "right": true}]}},
+        {"type": "math", "text": "接線 ℓ ⊥ 半径 OA"}
+      ]
+    },
+    {
+      "id": "s5",
+      "name": "おうぎ形の弧の長さと面積",
+      "explanation": [
+        {"type": "text", "text": "円周率を π で表すと、半径 r の円の円周は 2πr、面積は πr² です。"},
+        {"type": "text", "text": "おうぎ形の弧の長さと面積は、中心角に比例します。中心角が a° のおうぎ形では、"},
+        {"type": "math", "text": "弧の長さ = 2πr × a/360"},
+        {"type": "math", "text": "面積 = πr² × a/360"},
+        {"type": "figure", "figure": {"type": "geometry", "points": {"O": [0, 0], "A": [6, 0], "B": [3.0, 5.196]}, "sectors": [{"center": "O", "r": 6, "from": 0, "to": 60}], "segments": [["O", "A"], ["O", "B"]], "angles": [{"vertex": "O", "from": "A", "to": "B", "label": "60°"}], "labels": [{"pos": [3.0, -0.72], "text": "6cm"}]}},
+        {"type": "math", "text": "半径 6cm、中心角 60°：弧 = 2π×6×60/360 = 2π"},
+        {"type": "math", "text": "面積 = π×6²×60/360 = 6π"},
+        {"type": "text", "text": "答えは「6π」のように π を使って答えます（単位は書きません）。π は π キーで入力します。"}
+      ]
+    }
+  ],
+  "problems": [
+    {
+      "id": "j1-plane-s1-e01",
+      "section": "s1",
+      "role": "example",
+      "question": "図で、A、O、B は一直線上にあります。∠x の大きさを求めなさい。（数だけで答えなさい）",
+      "answers": ["135"],
+      "hints": [],
+      "solution": "一直線がつくる角は 180° なので、∠x = 180°−45° = 135°",
+      "figure": {"type": "geometry", "points": {"A": [-4, 0], "B": [4, 0], "O": [0, 0], "C": [2.475, 2.475]}, "segments": [["A", "B"], ["O", "C"]], "angles": [{"vertex": "O", "from": "B", "to": "C", "label": "45°"}, {"vertex": "O", "from": "C", "to": "A", "label": "x"}]}
+    },
+    {
+      "id": "j1-plane-s1-c01",
+      "section": "s1",
+      "role": "check",
+      "question": "図で、A、O、B は一直線上にあります。∠x の大きさを求めなさい。（数だけで答えなさい）",
+      "answers": ["110"],
+      "hints": ["一直線がつくる角は 180° です。", "180° から 70° をひきます。"],
+      "solution": "∠x = 180°−70° = 110°",
+      "figure": {"type": "geometry", "points": {"A": [-4, 0], "B": [4, 0], "O": [0, 0], "C": [1.197, 3.289]}, "segments": [["A", "B"], ["O", "C"]], "angles": [{"vertex": "O", "from": "B", "to": "C", "label": "70°"}, {"vertex": "O", "from": "C", "to": "A", "label": "x"}]}
+    },
+    {
+      "id": "j1-plane-s1-c02",
+      "section": "s1",
+      "role": "check",
+      "question": "∠AOB = 90° で、∠AOC = 35° のとき、∠COB の大きさを求めなさい。（数だけで答えなさい）",
+      "answers": ["55"],
+      "hints": ["∠AOC と ∠COB を合わせると ∠AOB になります。", "90° から 35° をひきます。"],
+      "solution": "∠COB = 90°−35° = 55°",
+      "figure": {"type": "geometry", "points": {"O": [0, 0], "A": [3.5, 0.0], "C": [2.867, 2.008], "B": [0.0, 3.5]}, "segments": [["O", "A"], ["O", "C"], ["O", "B"]], "angles": [{"vertex": "O", "from": "A", "to": "C", "label": "35°"}, {"vertex": "O", "from": "C", "to": "B", "label": "x"}]}
+    },
+    {
+      "id": "j1-plane-s1-t01",
+      "section": "s1",
+      "role": "test",
+      "question": "図で、A、O、B は一直線上にあります。∠x の大きさを求めなさい。（数だけで答えなさい）",
+      "answers": ["52"],
+      "hints": ["一直線がつくる角は 180° です。", "180° から 128° をひきます。"],
+      "solution": "∠x = 180°−128° = 52°",
+      "figure": {"type": "geometry", "points": {"A": [-4, 0], "B": [4, 0], "O": [0, 0], "C": [-2.155, 2.758]}, "segments": [["A", "B"], ["O", "C"]], "angles": [{"vertex": "O", "from": "B", "to": "C", "label": "128°"}, {"vertex": "O", "from": "C", "to": "A", "label": "x"}]}
+    },
+    {
+      "id": "j1-plane-s1-t02",
+      "section": "s1",
+      "role": "test",
+      "question": "図で、A、O、B は一直線上にあります。∠x の大きさを求めなさい。（数だけで答えなさい）",
+      "answers": ["75"],
+      "hints": ["3つの角を合わせると 180° になります。", "180° から 40° と 65° をひきます。"],
+      "solution": "∠x = 180°−40°−65° = 75°",
+      "figure": {"type": "geometry", "points": {"A": [-4, 0], "B": [4, 0], "O": [0, 0], "C": [2.681, 2.25], "D": [-1.479, 3.172]}, "segments": [["A", "B"], ["O", "C"], ["O", "D"]], "angles": [{"vertex": "O", "from": "B", "to": "C", "label": "40°"}, {"vertex": "O", "from": "C", "to": "D", "label": "x"}, {"vertex": "O", "from": "D", "to": "A", "label": "65°"}]}
+    },
+    {
+      "id": "j1-plane-s1-t03",
+      "section": "s1",
+      "role": "test",
+      "question": "図のように、点 O のまわりに3つの角があります。∠x の大きさを求めなさい。（数だけで答えなさい）",
+      "answers": ["90"],
+      "hints": ["点のまわり1周の角は 360° です。", "360° から 120° と 150° をひきます。"],
+      "solution": "∠x = 360°−120°−150° = 90°",
+      "figure": {"type": "geometry", "points": {"O": [0, 0], "A": [3.5, 0.0], "B": [-1.75, 3.031], "C": [-0.0, -3.5]}, "segments": [["O", "A"], ["O", "B"], ["O", "C"]], "angles": [{"vertex": "O", "from": "A", "to": "B", "label": "120°"}, {"vertex": "O", "from": "B", "to": "C", "label": "150°"}, {"vertex": "O", "from": "C", "to": "A", "label": "x"}]}
+    },
+    {
+      "id": "j1-plane-s1-t04",
+      "section": "s1",
+      "role": "test",
+      "question": "∠AOB = 90° で、∠AOC = 62° のとき、∠COB の大きさを求めなさい。（数だけで答えなさい）",
+      "answers": ["28"],
+      "hints": ["∠AOC と ∠COB を合わせると ∠AOB になります。", "90° から 62° をひきます。"],
+      "solution": "∠COB = 90°−62° = 28°",
+      "figure": {"type": "geometry", "points": {"O": [0, 0], "A": [3.5, 0.0], "C": [1.643, 3.09], "B": [0.0, 3.5]}, "segments": [["O", "A"], ["O", "C"], ["O", "B"]], "angles": [{"vertex": "O", "from": "A", "to": "C", "label": "62°"}, {"vertex": "O", "from": "C", "to": "B", "label": "x"}]}
+    },
+    {
+      "id": "j1-plane-s1-t05",
+      "section": "s1",
+      "role": "test",
+      "question": "点 P から直線 ℓ に垂線 PH をひくと、PH = 5cm でした。また、ℓ 上の点 A について PA = 7cm です。点 P と直線 ℓ との距離は何 cm ですか。（数だけで答えなさい）",
+      "answers": ["5"],
+      "hints": ["点と直線との距離は、垂線の長さです。", "垂線は PH です。"],
+      "solution": "点 P と直線 ℓ との距離は、垂線 PH の長さなので 5cm です。",
+      "figure": null
+    },
+    {
+      "id": "j1-plane-s2-e01",
+      "section": "s2",
+      "role": "example",
+      "question": "△ABC を平行移動して △DEF に重ねました。AB = 5cm のとき、DE の長さは何 cm ですか。（数だけで答えなさい）",
+      "answers": ["5"],
+      "hints": [],
+      "solution": "移動の前と後で、対応する辺の長さは等しくなります。AB と DE が対応するので、DE = 5cm です。",
+      "figure": null
+    },
+    {
+      "id": "j1-plane-s2-c01",
+      "section": "s2",
+      "role": "check",
+      "question": "点 A を、点 O を回転の中心として回転移動した点を A′ とします。OA = 4cm のとき、OA′ の長さは何 cm ですか。（数だけで答えなさい）",
+      "answers": ["4"],
+      "hints": ["回転移動では、対応する点は回転の中心から等しい距離にあります。", "OA と OA′ は等しくなります。"],
+      "solution": "回転の中心から対応する点までの距離は等しいので、OA′ = OA = 4cm です。",
+      "figure": null
+    },
+    {
+      "id": "j1-plane-s2-c02",
+      "section": "s2",
+      "role": "check",
+      "question": "点 P を直線 ℓ について対称移動した点を P′ とし、PP′ と ℓ の交点を M とします。PM = 3cm のとき、PP′ の長さは何 cm ですか。（数だけで答えなさい）",
+      "answers": ["6"],
+      "hints": ["対称の軸は、PP′ の垂直二等分線です。", "M は PP′ の中点なので、PP′ = PM×2 です。"],
+      "solution": "ℓ は PP′ の垂直二等分線なので PM = MP′ です。PP′ = 3×2 = 6（cm）",
+      "figure": null
+    },
+    {
+      "id": "j1-plane-s2-t01",
+      "section": "s2",
+      "role": "test",
+      "question": "点 O を中心にして △ABC を回転移動し、△A′B′C′ に重ねました。∠AOA′ = 70° のとき、∠BOB′ の大きさを求めなさい。（数だけで答えなさい）",
+      "answers": ["70"],
+      "hints": ["回転移動では、どの点も同じ角度だけ回ります。", "∠BOB′ は回転の角と同じです。"],
+      "solution": "どの点も同じ角度だけ回転するので、∠BOB′ = ∠AOA′ = 70° です。",
+      "figure": null
+    },
+    {
+      "id": "j1-plane-s2-t02",
+      "section": "s2",
+      "role": "test",
+      "question": "点対称移動は、何度の回転移動ですか。（数だけで答えなさい）",
+      "answers": ["180"],
+      "hints": ["点対称移動は、回転移動の特別な場合です。", "半回転させる移動です。"],
+      "solution": "点対称移動は 180° の回転移動です。",
+      "figure": null
+    },
+    {
+      "id": "j1-plane-s2-t03",
+      "section": "s2",
+      "role": "test",
+      "question": "△ABC を平行移動して △DEF に重ねました。AD = 6cm のとき、BE の長さは何 cm ですか。（数だけで答えなさい）",
+      "answers": ["6"],
+      "hints": ["平行移動では、対応する点を結ぶ線分の長さはどれも等しくなります。", "AD と BE は等しくなります。"],
+      "solution": "平行移動では対応する点を結ぶ線分の長さが等しいので、BE = AD = 6cm です。",
+      "figure": null
+    },
+    {
+      "id": "j1-plane-s2-t04",
+      "section": "s2",
+      "role": "test",
+      "question": "点 P を直線 ℓ について対称移動した点を P′ とします。直線 ℓ と線分 PP′ は何度で交わりますか。（数だけで答えなさい）",
+      "answers": ["90"],
+      "hints": ["対称の軸は、PP′ の垂直二等分線です。", "垂直に交わる角の大きさを答えます。"],
+      "solution": "ℓ は PP′ の垂直二等分線なので、90° で交わります。",
+      "figure": null
+    },
+    {
+      "id": "j1-plane-s2-t05",
+      "section": "s2",
+      "role": "test",
+      "question": "△ABC を回転移動して △A′B′C′ に重ねました。∠ABC = 50° のとき、∠A′B′C′ の大きさを求めなさい。（数だけで答えなさい）",
+      "answers": ["50"],
+      "hints": ["移動の前と後で、対応する角の大きさは等しくなります。", "∠ABC と ∠A′B′C′ が対応します。"],
+      "solution": "対応する角の大きさは等しいので、∠A′B′C′ = 50° です。",
+      "figure": null
+    },
+    {
+      "id": "j1-plane-s3-e01",
+      "section": "s3",
+      "role": "example",
+      "question": "長さ 8cm の線分 AB の垂直二等分線をかき、AB との交点を M とします。AM の長さは何 cm ですか。（数だけで答えなさい）",
+      "answers": ["4"],
+      "hints": [],
+      "solution": "垂直二等分線は線分の中点を通るので、M は AB の中点です。AM = 8÷2 = 4（cm）",
+      "figure": null
+    },
+    {
+      "id": "j1-plane-s3-c01",
+      "section": "s3",
+      "role": "check",
+      "question": "線分 AB の垂直二等分線上に点 P をとると、PA = 5cm でした。PB の長さは何 cm ですか。（数だけで答えなさい）",
+      "answers": ["5"],
+      "hints": ["垂直二等分線上の点は、線分の両端から等しい距離にあります。", "PA と PB は等しくなります。"],
+      "solution": "垂直二等分線上の点は A、B から等しい距離にあるので、PB = PA = 5cm です。",
+      "figure": null
+    },
+    {
+      "id": "j1-plane-s3-c02",
+      "section": "s3",
+      "role": "check",
+      "question": "∠AOB = 80° の二等分線 OC をかきました。∠AOC の大きさを求めなさい。（数だけで答えなさい）",
+      "answers": ["40"],
+      "hints": ["角の二等分線は、角を2等分します。", "80° を 2 でわります。"],
+      "solution": "∠AOC = 80°÷2 = 40°",
+      "figure": null
+    },
+    {
+      "id": "j1-plane-s3-t01",
+      "section": "s3",
+      "role": "test",
+      "question": "∠XOY = 130° の二等分線をかくと、∠XOY は何度の角2つに分けられますか。（数だけで答えなさい）",
+      "answers": ["65"],
+      "hints": ["角の二等分線は、角を2等分します。", "130° を 2 でわります。"],
+      "solution": "130°÷2 = 65° です。",
+      "figure": null
+    },
+    {
+      "id": "j1-plane-s3-t02",
+      "section": "s3",
+      "role": "test",
+      "question": "∠XOY の二等分線上に点 P をとります。点 P から辺 OX までの距離が 3cm のとき、点 P から辺 OY までの距離は何 cm ですか。（数だけで答えなさい）",
+      "answers": ["3"],
+      "hints": ["角の二等分線上の点は、角の2辺から等しい距離にあります。", "OX までの距離と OY までの距離は等しくなります。"],
+      "solution": "角の二等分線上の点は2辺から等しい距離にあるので、OY までの距離も 3cm です。",
+      "figure": null
+    },
+    {
+      "id": "j1-plane-s3-t03",
+      "section": "s3",
+      "role": "test",
+      "question": "線分 AB とその垂直二等分線は、何度で交わりますか。（数だけで答えなさい）",
+      "answers": ["90"],
+      "hints": ["「垂直」二等分線です。", "垂直に交わる角の大きさを答えます。"],
+      "solution": "垂直二等分線は線分と垂直に交わるので、90° です。",
+      "figure": null
+    },
+    {
+      "id": "j1-plane-s3-t04",
+      "section": "s3",
+      "role": "test",
+      "question": "長さ 10cm の線分 AB の中点を、垂直二等分線を作図して求め、M とします。MB の長さは何 cm ですか。（数だけで答えなさい）",
+      "answers": ["5"],
+      "hints": ["M は AB の中点です。", "10 を 2 でわります。"],
+      "solution": "M は AB の中点なので、MB = 10÷2 = 5（cm）",
+      "figure": null
+    },
+    {
+      "id": "j1-plane-s3-t05",
+      "section": "s3",
+      "role": "test",
+      "question": "一直線 AOB がつくる角（180°）の二等分線をかくと、直線 AB とその二等分線のつくる角は何度ですか。（数だけで答えなさい）",
+      "answers": ["90"],
+      "hints": ["一直線がつくる角は 180° です。", "180° を 2 でわります。"],
+      "solution": "180°÷2 = 90° なので、二等分線は AB に垂直です。",
+      "figure": null
+    },
+    {
+      "id": "j1-plane-s4-e01",
+      "section": "s4",
+      "role": "example",
+      "question": "半径 6cm の円の直径は何 cm ですか。（数だけで答えなさい）",
+      "answers": ["12"],
+      "hints": [],
+      "solution": "直径は半径の2倍なので、6×2 = 12（cm）",
+      "figure": null
+    },
+    {
+      "id": "j1-plane-s4-c01",
+      "section": "s4",
+      "role": "check",
+      "question": "図で、直線 PQ は円 O に点 A で接しています。∠OAP の大きさを求めなさい。（数だけで答えなさい）",
+      "answers": ["90"],
+      "hints": ["円の接線は、接点を通る半径に垂直です。", "OA は接点 A を通る半径です。"],
+      "solution": "接線は接点を通る半径に垂直なので、∠OAP = 90° です。",
+      "figure": {"type": "geometry", "points": {"O": [0, 0], "A": [0, 3], "P": [5, 3], "Q": [-3, 3]}, "circles": [{"center": "O", "r": 3}], "segments": [["O", "A"], ["Q", "P"]], "angles": [{"vertex": "A", "from": "O", "to": "P", "label": "?"}]}
+    },
+    {
+      "id": "j1-plane-s4-c02",
+      "section": "s4",
+      "role": "check",
+      "question": "ある円で、中心角 40° の弧の長さは 3cm です。同じ円で、中心角 120° の弧の長さは何 cm ですか。（数だけで答えなさい）",
+      "answers": ["9"],
+      "hints": ["1つの円では、弧の長さは中心角に比例します。", "120° は 40° の3倍です。"],
+      "solution": "中心角が3倍なので、弧の長さも3倍になります。3×3 = 9（cm）",
+      "figure": null
+    },
+    {
+      "id": "j1-plane-s4-t01",
+      "section": "s4",
+      "role": "test",
+      "question": "直径 14cm の円の半径は何 cm ですか。（数だけで答えなさい）",
+      "answers": ["7"],
+      "hints": ["直径は半径の2倍です。", "14 を 2 でわります。"],
+      "solution": "半径 = 14÷2 = 7（cm）",
+      "figure": null
+    },
+    {
+      "id": "j1-plane-s4-t02",
+      "section": "s4",
+      "role": "test",
+      "question": "図で、PA は円 O に点 A で接しています。∠AOP = 55° のとき、∠APO の大きさを求めなさい。（数だけで答えなさい）",
+      "answers": ["35"],
+      "hints": ["接線と接点を通る半径は垂直なので、∠OAP = 90° です。", "三角形の3つの角の和は 180° です。"],
+      "solution": "∠OAP = 90° なので、∠APO = 180°−90°−55° = 35°",
+      "figure": {"type": "geometry", "points": {"O": [0, 0], "A": [0, 3], "P": [4.284, 3]}, "circles": [{"center": "O", "r": 3}], "segments": [["O", "A"], ["A", "P"], ["O", "P"]], "angles": [{"vertex": "A", "from": "O", "to": "P", "right": true}, {"vertex": "O", "from": "P", "to": "A", "label": "55°"}, {"vertex": "P", "from": "A", "to": "O", "label": "x"}]}
+    },
+    {
+      "id": "j1-plane-s4-t03",
+      "section": "s4",
+      "role": "test",
+      "question": "ある円で、中心角 30° の弧の長さは 2cm です。同じ円で、中心角 90° の弧の長さは何 cm ですか。（数だけで答えなさい）",
+      "answers": ["6"],
+      "hints": ["弧の長さは中心角に比例します。", "90° は 30° の3倍です。"],
+      "solution": "中心角が3倍なので、2×3 = 6（cm）",
+      "figure": null
+    },
+    {
+      "id": "j1-plane-s4-t04",
+      "section": "s4",
+      "role": "test",
+      "question": "円全体をおうぎ形と考えると、その中心角は何度ですか。（数だけで答えなさい）",
+      "answers": ["360"],
+      "hints": ["円の中心のまわりを1周する角です。", "1周の角は何度かを考えます。"],
+      "solution": "円の中心のまわり1周の角なので、360° です。",
+      "figure": null
+    },
+    {
+      "id": "j1-plane-s4-t05",
+      "section": "s4",
+      "role": "test",
+      "question": "半径 4cm の円の弦のうち、いちばん長い弦の長さは何 cm ですか。（数だけで答えなさい）",
+      "answers": ["8"],
+      "hints": ["いちばん長い弦は、中心を通る弦です。", "中心を通る弦は直径です。"],
+      "solution": "いちばん長い弦は直径なので、4×2 = 8（cm）",
+      "figure": null
+    },
+    {
+      "id": "j1-plane-s5-e01",
+      "section": "s5",
+      "role": "example",
+      "question": "半径 3cm の円の円周の長さを求めなさい。（π を使って答えなさい）",
+      "answers": ["6π"],
+      "hints": [],
+      "solution": "円周 = 2πr = 2×π×3 = 6π（cm）",
+      "figure": null
+    },
+    {
+      "id": "j1-plane-s5-c01",
+      "section": "s5",
+      "role": "check",
+      "question": "半径 4cm の円の面積を求めなさい。（π を使って答えなさい）",
+      "answers": ["16π"],
+      "hints": ["円の面積は πr² です。", "π×4² を計算します。"],
+      "solution": "面積 = π×4² = 16π（cm²）",
+      "figure": null
+    },
+    {
+      "id": "j1-plane-s5-c02",
+      "section": "s5",
+      "role": "check",
+      "question": "図のおうぎ形（半径 6cm、中心角 120°）の弧の長さを求めなさい。（π を使って答えなさい）",
+      "answers": ["4π"],
+      "hints": ["弧の長さ = 2πr × a/360 です。", "2π×6×120/360 を計算します。"],
+      "solution": "2π×6×120/360 = 12π×1/3 = 4π（cm）",
+      "figure": {"type": "geometry", "points": {"O": [0, 0], "A": [6, 0], "B": [-3.0, 5.196]}, "sectors": [{"center": "O", "r": 6, "from": 0, "to": 120}], "segments": [["O", "A"], ["O", "B"]], "angles": [{"vertex": "O", "from": "A", "to": "B", "label": "120°"}], "labels": [{"pos": [3.0, -0.72], "text": "6cm"}]}
+    },
+    {
+      "id": "j1-plane-s5-t01",
+      "section": "s5",
+      "role": "test",
+      "question": "半径 5cm の円の円周の長さを求めなさい。（π を使って答えなさい）",
+      "answers": ["10π"],
+      "hints": ["円周は 2πr です。", "2×π×5 を計算します。"],
+      "solution": "円周 = 2×π×5 = 10π（cm）",
+      "figure": null
+    },
+    {
+      "id": "j1-plane-s5-t02",
+      "section": "s5",
+      "role": "test",
+      "question": "図のおうぎ形（半径 8cm、中心角 45°）の面積を求めなさい。（π を使って答えなさい）",
+      "answers": ["8π"],
+      "hints": ["面積 = πr² × a/360 です。", "π×8²×45/360 を計算します。"],
+      "solution": "π×64×45/360 = 64π×1/8 = 8π（cm²）",
+      "figure": {"type": "geometry", "points": {"O": [0, 0], "A": [8, 0], "B": [5.657, 5.657]}, "sectors": [{"center": "O", "r": 8, "from": 0, "to": 45}], "segments": [["O", "A"], ["O", "B"]], "angles": [{"vertex": "O", "from": "A", "to": "B", "label": "45°"}], "labels": [{"pos": [4.0, -0.96], "text": "8cm"}]}
+    },
+    {
+      "id": "j1-plane-s5-t03",
+      "section": "s5",
+      "role": "test",
+      "question": "図のおうぎ形（半径 9cm、中心角 60°）の弧の長さを求めなさい。（π を使って答えなさい）",
+      "answers": ["3π"],
+      "hints": ["弧の長さ = 2πr × a/360 です。", "2π×9×60/360 を計算します。"],
+      "solution": "2π×9×60/360 = 18π×1/6 = 3π（cm）",
+      "figure": {"type": "geometry", "points": {"O": [0, 0], "A": [9, 0], "B": [4.5, 7.794]}, "sectors": [{"center": "O", "r": 9, "from": 0, "to": 60}], "segments": [["O", "A"], ["O", "B"]], "angles": [{"vertex": "O", "from": "A", "to": "B", "label": "60°"}], "labels": [{"pos": [4.5, -1.08], "text": "9cm"}]}
+    },
+    {
+      "id": "j1-plane-s5-t04",
+      "section": "s5",
+      "role": "test",
+      "question": "図のおうぎ形（半径 3cm、中心角 90°）の面積を求めなさい。答えが分数になるときは、約分した形で答えなさい。（π を使って答えなさい）",
+      "answers": ["9π/4"],
+      "hints": ["面積 = πr² × a/360 です。", "π×3²×90/360 = 9π×1/4 です。"],
+      "solution": "π×9×90/360 = 9π×1/4 = 9π/4（cm²）",
+      "figure": {"type": "geometry", "points": {"O": [0, 0], "A": [3, 0], "B": [0.0, 3.0]}, "sectors": [{"center": "O", "r": 3, "from": 0, "to": 90}], "segments": [["O", "A"], ["O", "B"]], "angles": [{"vertex": "O", "from": "A", "to": "B", "right": true}], "labels": [{"pos": [1.5, -0.36], "text": "3cm"}]}
+    },
+    {
+      "id": "j1-plane-s5-t05",
+      "section": "s5",
+      "role": "test",
+      "question": "半径 4cm、弧の長さ 2π cm のおうぎ形の中心角は何度ですか。（数だけで答えなさい）",
+      "answers": ["90"],
+      "hints": ["同じ半径の円の円周は 2π×4 = 8π です。", "弧の長さは円周の何分のいくつかを考えます。"],
+      "solution": "円周は 8π cm なので、弧の長さ 2π は円周の 1/4 です。中心角は 360°×1/4 = 90°",
+      "figure": null
+    }
+  ]
+}
