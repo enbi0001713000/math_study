@@ -903,3 +903,8 @@ a.button {
 .solid .solid-label.is-left {
   text-anchor: start;
 }
+
+.solid .solid-label.is-vertex {
+  font-weight: bold;
+  fill: var(--text);
+}

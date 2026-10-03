@@ -20,7 +20,8 @@
       "keys": ["digits", "dot", "minus", "frac", "x", "y", "eq", "del"] },
     { "id": "j1-plane", "grade": "j1", "name": "平面図形", "prerequisites": [], "available": true,
       "keys": ["digits", "dot", "plus", "minus", "frac", "pi", "del"] },
-    { "id": "j1-solid", "grade": "j1", "name": "空間図形", "prerequisites": ["j1-plane"], "available": false, "keys": null },
+    { "id": "j1-solid", "grade": "j1", "name": "空間図形", "prerequisites": ["j1-plane"], "available": true,
+      "keys": ["digits", "dot", "plus", "minus", "frac", "pi", "del"] },
     { "id": "j1-data", "grade": "j1", "name": "データの活用（ヒストグラム・相対度数）", "prerequisites": [], "available": false, "keys": null },
 
     { "id": "j2-poly", "grade": "j2", "name": "式の計算", "prerequisites": ["j1-expr"], "available": false, "keys": null },

@@ -325,6 +325,11 @@ const Figure = (() => {
       const d = fig.d / 2;
       verts = [[-w, 0, d], [w, 0, d], [w, 0, -d], [-w, 0, -d], [-w, h, d], [w, h, d], [w, h, -d], [-w, h, -d]];
       polyhedron(verts, [[0, 3, 2, 1], [4, 5, 6, 7], [0, 1, 5, 4], [1, 2, 6, 5], [2, 3, 7, 6], [3, 0, 4, 7]]);
+      // 頂点の名前：上の面が ABCD（A が手前左）、下の面が EFGH（E は A の真下）
+      if (fig.vertexLabels) {
+        const names = ['E', 'F', 'G', 'H', 'A', 'B', 'C', 'D'];
+        verts.forEach((v3, i) => labelsAt.push({ p: v3, text: names[i], vertex: true }));
+      }
       if (fig.labels) {
         if (fig.labels.w) labelsAt.push({ p: [0, -0.18 * h, d], text: fig.labels.w });
         if (fig.labels.d) labelsAt.push({ p: [w + 0.15 * fig.w, 0, 0], text: fig.labels.d });
@@ -490,9 +495,21 @@ const Figure = (() => {
       const b1 = view(p2);
       svg.append(svgEl('line', { x1: X(a1), y1: Y(a1), x2: X(b1), y2: Y(b1), class: 'edge is-aux' }));
     });
+    // 頂点の名前は、画面上で図の中心から外側へ 13px ずらす
+    const vtx = labelsAt.filter((l) => l.vertex).map((l) => view(l.p));
+    const mid = vtx.length ? [vtx.reduce((t, q) => t + q[0], 0) / vtx.length, vtx.reduce((t, q) => t + q[1], 0) / vtx.length] : [0, 0];
     labelsAt.forEach((l) => {
       const p3 = view(l.p);
-      svg.append(svgEl('text', { x: X(p3), y: (Number(Y(p3)) + 4).toFixed(1), class: `solid-label${l.side === 'right' ? ' is-left' : ''}` }, l.text));
+      if (l.vertex) {
+        const dx = p3[0] - mid[0];
+        const dy = p3[1] - mid[1];
+        const len = Math.hypot(dx, dy) || 1;
+        const lx = Number(X(p3)) + (dx / len) * 13;
+        const ly = Number(Y(p3)) - (dy / len) * 13 + 5;
+        svg.append(svgEl('text', { x: lx.toFixed(1), y: ly.toFixed(1), class: 'solid-label is-vertex' }, l.text));
+        return;
+      }
+      svg.append(svgEl('text', { x: X(p3), y: (Number(Y(p3)) + 4).toFixed(1), class: `solid-label${l.side === 'right' ? ' is-left' : ''}${l.vertex ? ' is-vertex' : ''}` }, l.text));
     });
     return svg;
   }
