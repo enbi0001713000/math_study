@@ -1,0 +1,468 @@
+{
+  "id": "j1-solid",
+  "sections": [
+    {
+      "id": "s1",
+      "name": "いろいろな立体",
+      "explanation": [
+        {"type": "text", "text": "平面だけで囲まれた立体を多面体といいます。角柱や角錐は多面体です。円柱・円錐・球のように、曲面をふくむ立体もあります。"},
+        {"type": "figure", "figure": {"type": "solid", "shape": "prism", "sides": 3, "r": 2, "h": 3.5}},
+        {"type": "figure", "figure": {"type": "solid", "shape": "pyramid", "sides": 4, "r": 2.5, "h": 3.5}},
+        {"type": "text", "text": "n 角柱は、面が n+2、辺が 3n、頂点が 2n あります。n 角錐は、面が n+1、辺が 2n、頂点が n+1 あります。"},
+        {"type": "math", "text": "三角柱：面 5、辺 9、頂点 6"},
+        {"type": "math", "text": "四角錐：面 5、辺 8、頂点 5"},
+        {"type": "text", "text": "どの面もすべて合同な正多角形で、どの頂点にも同じ数の面が集まるへこみのない多面体を正多面体といいます。正多面体は、正四面体・正六面体（立方体）・正八面体・正十二面体・正二十面体の5種類だけです。"}
+      ]
+    },
+    {
+      "id": "s2",
+      "name": "直線や平面の位置関係",
+      "explanation": [
+        {"type": "text", "text": "空間内の2直線の位置関係には、「交わる」「平行」「ねじれの位置」の3つがあります。ねじれの位置とは、交わらず、平行でもない（同じ平面上にない）関係です。"},
+        {"type": "figure", "figure": {"type": "solid", "shape": "cuboid", "w": 5, "d": 3, "h": 3, "vertexLabels": true}},
+        {"type": "text", "text": "直方体 ABCD−EFGH で、辺 AB と"},
+        {"type": "math", "text": "平行な辺：DC、EF、HG　　交わる辺：AD、AE、BC、BF"},
+        {"type": "math", "text": "ねじれの位置にある辺：CG、DH、EH、FG"},
+        {"type": "text", "text": "直線と平面の位置関係には、「平面上にある」「交わる」「平行」の3つがあります。直線が平面上の2直線に垂直なとき、直線と平面は垂直です。2つの平面の位置関係には、「交わる」「平行」があります。"}
+      ]
+    },
+    {
+      "id": "s3",
+      "name": "立体の見方",
+      "explanation": [
+        {"type": "text", "text": "平面図形を、その平面上の直線（回転の軸）のまわりに1回転させてできる立体を回転体といいます。"},
+        {"type": "math", "text": "長方形 → 円柱　　直角三角形 → 円錐　　半円 → 球"},
+        {"type": "text", "text": "立体を正面から見た図を立面図、真上から見た図を平面図といい、まとめて投影図といいます。円柱は、立面図が長方形、平面図が円になります。"},
+        {"type": "text", "text": "立体の表面を切り開いて平面に広げた図を展開図といいます。円柱の展開図では、側面は長方形になり、その横の長さは底面の円周と等しくなります。円錐の展開図では、側面はおうぎ形になり、その弧の長さは底面の円周と等しくなります。"}
+      ]
+    },
+    {
+      "id": "s4",
+      "name": "立体の表面積",
+      "explanation": [
+        {"type": "text", "text": "立体のすべての面の面積の和を表面積、側面全体の面積を側面積、1つの底面の面積を底面積といいます。"},
+        {"type": "math", "text": "角柱・円柱の表面積 = 側面積 + 底面積×2"},
+        {"type": "math", "text": "角錐・円錐の表面積 = 側面積 + 底面積"},
+        {"type": "text", "text": "角柱・円柱の側面積は、高さ×底面の周の長さで求められます。"},
+        {"type": "figure", "figure": {"type": "solid", "shape": "cylinder", "r": 3, "h": 5, "labels": {"r": "3cm", "h": "5cm"}}},
+        {"type": "math", "text": "側面積 = 5×(2π×3) = 30π　底面積 = π×3² = 9π"},
+        {"type": "math", "text": "表面積 = 30π + 9π×2 = 48π"},
+        {"type": "text", "text": "円錐の側面積は π×母線の長さ×底面の半径、球の表面積は 4πr² です。"}
+      ]
+    },
+    {
+      "id": "s5",
+      "name": "立体の体積",
+      "explanation": [
+        {"type": "text", "text": "角柱・円柱の体積は「底面積×高さ」、角錐・円錐の体積は「1/3×底面積×高さ」です。"},
+        {"type": "math", "text": "柱の体積 V = Sh　　錐の体積 V = 1/3 Sh"},
+        {"type": "figure", "figure": {"type": "solid", "shape": "cone", "r": 3, "h": 4, "labels": {"r": "3cm", "h": "4cm"}}},
+        {"type": "math", "text": "円錐：1/3×π×3²×4 = 12π"},
+        {"type": "text", "text": "半径 r の球の体積は 4/3πr³ です。"},
+        {"type": "math", "text": "半径 3cm の球：4/3×π×3³ = 36π"}
+      ]
+    }
+  ],
+  "problems": [
+    {
+      "id": "j1-solid-s1-e01",
+      "section": "s1",
+      "role": "example",
+      "question": "三角柱の面の数を答えなさい。（数だけで答えなさい）",
+      "answers": ["5"],
+      "hints": [],
+      "solution": "底面が2つ、側面が3つなので、面の数は 2+3 = 5 です。",
+      "figure": {"type": "solid", "shape": "prism", "sides": 3, "r": 2, "h": 3.5}
+    },
+    {
+      "id": "j1-solid-s1-c01",
+      "section": "s1",
+      "role": "check",
+      "question": "四角錐の辺の数を答えなさい。（数だけで答えなさい）",
+      "answers": ["8"],
+      "hints": ["底面の辺と、側面の辺に分けて数えます。", "底面に4本、頂点から底面へ4本あります。"],
+      "solution": "底面の辺が4本、頂点と底面を結ぶ辺が4本なので、4+4 = 8 です。",
+      "figure": {"type": "solid", "shape": "pyramid", "sides": 4, "r": 2.5, "h": 3.5}
+    },
+    {
+      "id": "j1-solid-s1-c02",
+      "section": "s1",
+      "role": "check",
+      "question": "六角柱の頂点の数を答えなさい。（数だけで答えなさい）",
+      "answers": ["12"],
+      "hints": ["上と下の底面に分けて数えます。", "1つの底面に頂点が6つあります。"],
+      "solution": "上の底面に6つ、下の底面に6つあるので、6×2 = 12 です。",
+      "figure": {"type": "solid", "shape": "prism", "sides": 6, "r": 2, "h": 3}
+    },
+    {
+      "id": "j1-solid-s1-t01",
+      "section": "s1",
+      "role": "test",
+      "question": "五角柱の辺の数を答えなさい。（数だけで答えなさい）",
+      "answers": ["15"],
+      "hints": ["n 角柱の辺の数は 3n です。", "上の底面、下の底面、側面の辺に分けて数えます。"],
+      "solution": "上の底面に5本、下の底面に5本、側面に5本あるので、5×3 = 15 です。",
+      "figure": null
+    },
+    {
+      "id": "j1-solid-s1-t02",
+      "section": "s1",
+      "role": "test",
+      "question": "三角錐の面の数を答えなさい。（数だけで答えなさい）",
+      "answers": ["4"],
+      "hints": ["底面と側面に分けて数えます。", "底面が1つ、側面が3つです。"],
+      "solution": "底面1つと側面3つで、1+3 = 4 です。",
+      "figure": null
+    },
+    {
+      "id": "j1-solid-s1-t03",
+      "section": "s1",
+      "role": "test",
+      "question": "正多面体は、全部で何種類ありますか。（数だけで答えなさい）",
+      "answers": ["5"],
+      "hints": ["正四面体・正六面体などがあります。", "面の形が正三角形・正方形・正五角形のものに限られます。"],
+      "solution": "正四面体・正六面体・正八面体・正十二面体・正二十面体の5種類です。",
+      "figure": null
+    },
+    {
+      "id": "j1-solid-s1-t04",
+      "section": "s1",
+      "role": "test",
+      "question": "六角錐の頂点の数を答えなさい。（数だけで答えなさい）",
+      "answers": ["7"],
+      "hints": ["底面の頂点と、上の頂点に分けて数えます。", "底面に6つ、上に1つあります。"],
+      "solution": "底面の頂点6つと、上の頂点1つで、6+1 = 7 です。",
+      "figure": null
+    },
+    {
+      "id": "j1-solid-s1-t05",
+      "section": "s1",
+      "role": "test",
+      "question": "立方体の面の数を答えなさい。（数だけで答えなさい）",
+      "answers": ["6"],
+      "hints": ["立方体は正六面体ともいいます。", "上下・前後・左右の面を数えます。"],
+      "solution": "立方体は正六面体なので、面の数は 6 です。",
+      "figure": null
+    },
+    {
+      "id": "j1-solid-s2-e01",
+      "section": "s2",
+      "role": "example",
+      "question": "図の直方体 ABCD−EFGH で、辺 AB と平行な辺はいくつありますか。（数だけで答えなさい）",
+      "answers": ["3"],
+      "hints": [],
+      "solution": "辺 AB と平行な辺は、DC、EF、HG の3つです。",
+      "figure": {"type": "solid", "shape": "cuboid", "w": 5, "d": 3, "h": 3, "vertexLabels": true}
+    },
+    {
+      "id": "j1-solid-s2-c01",
+      "section": "s2",
+      "role": "check",
+      "question": "図の直方体 ABCD−EFGH で、辺 AB とねじれの位置にある辺はいくつありますか。（数だけで答えなさい）",
+      "answers": ["4"],
+      "hints": ["ねじれの位置にある辺は、AB と交わらず、平行でもない辺です。", "12本の辺から、AB 自身・平行な辺・交わる辺を除きます。"],
+      "solution": "12本のうち、AB 自身が1本、平行な辺が3本、交わる辺が4本なので、12−1−3−4 = 4 です（CG、DH、EH、FG）。",
+      "figure": {"type": "solid", "shape": "cuboid", "w": 5, "d": 3, "h": 3, "vertexLabels": true}
+    },
+    {
+      "id": "j1-solid-s2-c02",
+      "section": "s2",
+      "role": "check",
+      "question": "図の直方体 ABCD−EFGH で、面 ABCD と平行な面はいくつありますか。（数だけで答えなさい）",
+      "answers": ["1"],
+      "hints": ["向かい合う面を考えます。", "面 ABCD の反対側にある面です。"],
+      "solution": "面 ABCD と平行な面は、面 EFGH の1つです。",
+      "figure": {"type": "solid", "shape": "cuboid", "w": 5, "d": 3, "h": 3, "vertexLabels": true}
+    },
+    {
+      "id": "j1-solid-s2-t01",
+      "section": "s2",
+      "role": "test",
+      "question": "図の直方体 ABCD−EFGH で、辺 AE と垂直な面はいくつありますか。（数だけで答えなさい）",
+      "answers": ["2"],
+      "hints": ["辺 AE は縦の辺です。", "上の面と下の面を考えます。"],
+      "solution": "辺 AE と垂直な面は、面 ABCD と面 EFGH の2つです。",
+      "figure": {"type": "solid", "shape": "cuboid", "w": 5, "d": 3, "h": 3, "vertexLabels": true}
+    },
+    {
+      "id": "j1-solid-s2-t02",
+      "section": "s2",
+      "role": "test",
+      "question": "図の直方体 ABCD−EFGH で、面 ABFE と垂直な辺はいくつありますか。（数だけで答えなさい）",
+      "answers": ["4"],
+      "hints": ["面 ABFE は手前の面です。", "手前から奥へのびる辺を数えます。"],
+      "solution": "面 ABFE と垂直な辺は、AD、BC、FG、EH の4つです。",
+      "figure": {"type": "solid", "shape": "cuboid", "w": 5, "d": 3, "h": 3, "vertexLabels": true}
+    },
+    {
+      "id": "j1-solid-s2-t03",
+      "section": "s2",
+      "role": "test",
+      "question": "図の直方体 ABCD−EFGH で、辺 BF と平行な面はいくつありますか。（数だけで答えなさい）",
+      "answers": ["2"],
+      "hints": ["辺 BF をふくむ面は除きます。", "BF をふくまず、BF と交わらない面を探します。"],
+      "solution": "辺 BF と平行な面は、面 AEHD と面 DHGC の2つです。",
+      "figure": {"type": "solid", "shape": "cuboid", "w": 5, "d": 3, "h": 3, "vertexLabels": true}
+    },
+    {
+      "id": "j1-solid-s2-t04",
+      "section": "s2",
+      "role": "test",
+      "question": "図の直方体 ABCD−EFGH で、面 BFGC と平行な辺はいくつありますか。（数だけで答えなさい）",
+      "answers": ["4"],
+      "hints": ["面 BFGC は右側の面です。", "面にふくまれず、面と交わらない辺を探します。"],
+      "solution": "面 BFGC と平行な辺は、AE、DH、AD、EH の4つです。",
+      "figure": {"type": "solid", "shape": "cuboid", "w": 5, "d": 3, "h": 3, "vertexLabels": true}
+    },
+    {
+      "id": "j1-solid-s2-t05",
+      "section": "s2",
+      "role": "test",
+      "question": "空間内の2直線の位置関係は、全部で何通りありますか。（数だけで答えなさい）",
+      "answers": ["3"],
+      "hints": ["平面上では「交わる」「平行」の2通りです。", "空間では、どちらでもない関係があります。"],
+      "solution": "「交わる」「平行」「ねじれの位置」の3通りです。",
+      "figure": null
+    },
+    {
+      "id": "j1-solid-s3-e01",
+      "section": "s3",
+      "role": "example",
+      "question": "縦 5cm、横 3cm の長方形を、縦の辺を軸として1回転させます。できる立体の底面の半径は何 cm ですか。（数だけで答えなさい）",
+      "answers": ["3"],
+      "hints": [],
+      "solution": "長方形を回転させると円柱ができます。軸から離れた横の辺の長さ 3cm が、底面の半径になります。",
+      "figure": null
+    },
+    {
+      "id": "j1-solid-s3-c01",
+      "section": "s3",
+      "role": "check",
+      "question": "直角をはさむ2辺が 4cm と 3cm の直角三角形を、4cm の辺を軸として1回転させます。できる円錐の高さは何 cm ですか。（数だけで答えなさい）",
+      "answers": ["4"],
+      "hints": ["軸になった辺が、円錐の高さになります。", "軸は 4cm の辺です。"],
+      "solution": "軸にした 4cm の辺が円錐の高さになるので、4cm です。",
+      "figure": null
+    },
+    {
+      "id": "j1-solid-s3-c02",
+      "section": "s3",
+      "role": "check",
+      "question": "半径 6cm の半円を、直径を軸として1回転させます。できる球の半径は何 cm ですか。（数だけで答えなさい）",
+      "answers": ["6"],
+      "hints": ["半円を直径のまわりに回転させると球になります。", "半円の半径が、そのまま球の半径になります。"],
+      "solution": "できる球の半径は、半円の半径と同じ 6cm です。",
+      "figure": null
+    },
+    {
+      "id": "j1-solid-s3-t01",
+      "section": "s3",
+      "role": "test",
+      "question": "底面の半径が 2cm の円柱の展開図で、側面の長方形の横の長さを求めなさい。（π を使って答えなさい）",
+      "answers": ["4π"],
+      "hints": ["側面の長方形の横の長さは、底面の円周と等しくなります。", "円周は 2πr です。"],
+      "solution": "横の長さは底面の円周と等しいので、2×π×2 = 4π（cm）です。",
+      "figure": null
+    },
+    {
+      "id": "j1-solid-s3-t02",
+      "section": "s3",
+      "role": "test",
+      "question": "立面図が長方形、平面図が円である立体があります。この立体の面の数は、平面と曲面を合わせていくつですか。（数だけで答えなさい）",
+      "answers": ["3"],
+      "hints": ["立面図が長方形、平面図が円の立体は円柱です。", "底面2つと側面1つを数えます。"],
+      "solution": "この立体は円柱で、底面が2つ、側面（曲面）が1つなので、面の数は3です。",
+      "figure": null
+    },
+    {
+      "id": "j1-solid-s3-t03",
+      "section": "s3",
+      "role": "test",
+      "question": "立方体の展開図は、正方形がいくつ集まってできていますか。（数だけで答えなさい）",
+      "answers": ["6"],
+      "hints": ["展開図の面の数は、立体の面の数と同じです。", "立方体の面の数を考えます。"],
+      "solution": "立方体の面は6つなので、展開図は正方形6つでできています。",
+      "figure": null
+    },
+    {
+      "id": "j1-solid-s3-t04",
+      "section": "s3",
+      "role": "test",
+      "question": "底面の半径が 3cm の円錐の展開図で、側面のおうぎ形の弧の長さを求めなさい。（π を使って答えなさい）",
+      "answers": ["6π"],
+      "hints": ["おうぎ形の弧の長さは、底面の円周と等しくなります。", "円周は 2πr です。"],
+      "solution": "弧の長さは底面の円周と等しいので、2×π×3 = 6π（cm）です。",
+      "figure": null
+    },
+    {
+      "id": "j1-solid-s3-t05",
+      "section": "s3",
+      "role": "test",
+      "question": "正四角錐の展開図には、二等辺三角形がいくつありますか。（数だけで答えなさい）",
+      "answers": ["4"],
+      "hints": ["正四角錐の側面は、合同な二等辺三角形です。", "底面の正方形の辺の数だけ、側面があります。"],
+      "solution": "底面の正方形の4辺それぞれに側面があるので、二等辺三角形は4つです。",
+      "figure": null
+    },
+    {
+      "id": "j1-solid-s4-e01",
+      "section": "s4",
+      "role": "example",
+      "question": "図の直方体の表面積を求めなさい。（数だけで答えなさい）",
+      "answers": ["94"],
+      "hints": [],
+      "solution": "向かい合う面の面積は等しいので、\n表面積 = (5×3 + 5×4 + 3×4)×2 = (15+20+12)×2 = 94（cm²）",
+      "figure": {"type": "solid", "shape": "cuboid", "w": 5, "d": 3, "h": 4, "labels": {"w": "5cm", "d": "3cm", "h": "4cm"}}
+    },
+    {
+      "id": "j1-solid-s4-c01",
+      "section": "s4",
+      "role": "check",
+      "question": "図の円柱の表面積を求めなさい。（π を使って答えなさい）",
+      "answers": ["48π"],
+      "hints": ["側面積は、高さ×底面の円周です。", "表面積 = 側面積 + 底面積×2 です。"],
+      "solution": "側面積 = 5×(2π×3) = 30π、底面積 = π×3² = 9π\n表面積 = 30π+9π×2 = 48π（cm²）",
+      "figure": {"type": "solid", "shape": "cylinder", "r": 3, "h": 5, "labels": {"r": "3cm", "h": "5cm"}}
+    },
+    {
+      "id": "j1-solid-s4-c02",
+      "section": "s4",
+      "role": "check",
+      "question": "1辺が 4cm の立方体の表面積を求めなさい。（数だけで答えなさい）",
+      "answers": ["96"],
+      "hints": ["立方体の面は、すべて合同な正方形です。", "1つの面の面積を6倍します。"],
+      "solution": "1つの面の面積は 4×4 = 16（cm²）なので、表面積は 16×6 = 96（cm²）",
+      "figure": null
+    },
+    {
+      "id": "j1-solid-s4-t01",
+      "section": "s4",
+      "role": "test",
+      "question": "図の円柱の表面積を求めなさい。（π を使って答えなさい）",
+      "answers": ["32π"],
+      "hints": ["側面積は、高さ×底面の円周です。", "表面積 = 側面積 + 底面積×2 です。"],
+      "solution": "側面積 = 6×(2π×2) = 24π、底面積 = π×2² = 4π\n表面積 = 24π+4π×2 = 32π（cm²）",
+      "figure": {"type": "solid", "shape": "cylinder", "r": 2, "h": 6, "labels": {"r": "2cm", "h": "6cm"}}
+    },
+    {
+      "id": "j1-solid-s4-t02",
+      "section": "s4",
+      "role": "test",
+      "question": "底面の半径が 3cm、母線の長さが 5cm の円錐の表面積を求めなさい。（π を使って答えなさい）",
+      "answers": ["24π"],
+      "hints": ["円錐の側面積は、π×母線の長さ×底面の半径です。", "表面積 = 側面積 + 底面積 です。"],
+      "solution": "側面積 = π×5×3 = 15π、底面積 = π×3² = 9π\n表面積 = 15π+9π = 24π（cm²）",
+      "figure": {"type": "solid", "shape": "cone", "r": 3, "h": 4, "labels": {"r": "3cm", "l": "5cm"}}
+    },
+    {
+      "id": "j1-solid-s4-t03",
+      "section": "s4",
+      "role": "test",
+      "question": "半径 3cm の球の表面積を求めなさい。（π を使って答えなさい）",
+      "answers": ["36π"],
+      "hints": ["球の表面積は 4πr² です。", "4×π×3² を計算します。"],
+      "solution": "表面積 = 4×π×3² = 36π（cm²）",
+      "figure": {"type": "solid", "shape": "sphere", "r": 3, "labels": {"r": "3cm"}}
+    },
+    {
+      "id": "j1-solid-s4-t04",
+      "section": "s4",
+      "role": "test",
+      "question": "底面が1辺 6cm の正方形で、側面の4つの二等辺三角形の高さがどれも 5cm の正四角錐があります。この正四角錐の表面積を求めなさい。（数だけで答えなさい）",
+      "answers": ["96"],
+      "hints": ["底面積は 6×6 です。", "側面は、底辺 6cm・高さ 5cm の三角形が4つです。"],
+      "solution": "底面積 = 6×6 = 36、側面積 = (6×5÷2)×4 = 60\n表面積 = 36+60 = 96（cm²）",
+      "figure": null
+    },
+    {
+      "id": "j1-solid-s4-t05",
+      "section": "s4",
+      "role": "test",
+      "question": "底面の半径が 4cm、母線の長さが 10cm の円錐の側面積を求めなさい。（π を使って答えなさい）",
+      "answers": ["40π"],
+      "hints": ["円錐の側面積は、π×母線の長さ×底面の半径です。", "π×10×4 を計算します。"],
+      "solution": "側面積 = π×10×4 = 40π（cm²）",
+      "figure": null
+    },
+    {
+      "id": "j1-solid-s5-e01",
+      "section": "s5",
+      "role": "example",
+      "question": "縦 2cm、横 3cm、高さ 4cm の直方体の体積を求めなさい。（数だけで答えなさい）",
+      "answers": ["24"],
+      "hints": [],
+      "solution": "体積 = 底面積×高さ = (2×3)×4 = 24（cm³）",
+      "figure": null
+    },
+    {
+      "id": "j1-solid-s5-c01",
+      "section": "s5",
+      "role": "check",
+      "question": "図の円柱の体積を求めなさい。（π を使って答えなさい）",
+      "answers": ["36π"],
+      "hints": ["柱の体積は、底面積×高さです。", "底面積は π×3² です。"],
+      "solution": "体積 = π×3²×4 = 36π（cm³）",
+      "figure": {"type": "solid", "shape": "cylinder", "r": 3, "h": 4, "labels": {"r": "3cm", "h": "4cm"}}
+    },
+    {
+      "id": "j1-solid-s5-c02",
+      "section": "s5",
+      "role": "check",
+      "question": "底面が1辺 6cm の正方形で、高さが 5cm の正四角錐の体積を求めなさい。（数だけで答えなさい）",
+      "answers": ["60"],
+      "hints": ["錐の体積は、1/3×底面積×高さです。", "底面積は 6×6 = 36 です。"],
+      "solution": "体積 = 1/3×36×5 = 60（cm³）",
+      "figure": {"type": "solid", "shape": "pyramid", "sides": 4, "r": 3, "h": 4, "labels": {"h": "5cm"}}
+    },
+    {
+      "id": "j1-solid-s5-t01",
+      "section": "s5",
+      "role": "test",
+      "question": "底面が、直角をはさむ2辺が 3cm と 4cm の直角三角形で、高さが 5cm の三角柱の体積を求めなさい。（数だけで答えなさい）",
+      "answers": ["30"],
+      "hints": ["底面の直角三角形の面積を求めます。", "3×4÷2 = 6 が底面積です。"],
+      "solution": "底面積 = 3×4÷2 = 6\n体積 = 6×5 = 30（cm³）",
+      "figure": null
+    },
+    {
+      "id": "j1-solid-s5-t02",
+      "section": "s5",
+      "role": "test",
+      "question": "図の円錐の体積を求めなさい。（π を使って答えなさい）",
+      "answers": ["12π"],
+      "hints": ["錐の体積は、1/3×底面積×高さです。", "底面積は π×3² = 9π です。"],
+      "solution": "体積 = 1/3×π×3²×4 = 12π（cm³）",
+      "figure": {"type": "solid", "shape": "cone", "r": 3, "h": 4, "labels": {"r": "3cm", "h": "4cm"}}
+    },
+    {
+      "id": "j1-solid-s5-t03",
+      "section": "s5",
+      "role": "test",
+      "question": "半径 3cm の球の体積を求めなさい。（π を使って答えなさい）",
+      "answers": ["36π"],
+      "hints": ["球の体積は 4/3πr³ です。", "3³ = 27 です。"],
+      "solution": "体積 = 4/3×π×3³ = 4/3×27π = 36π（cm³）",
+      "figure": null
+    },
+    {
+      "id": "j1-solid-s5-t04",
+      "section": "s5",
+      "role": "test",
+      "question": "半径 2cm の球の体積を求めなさい。答えが分数になるときは、約分した形で答えなさい。（π を使って答えなさい）",
+      "answers": ["32π/3"],
+      "hints": ["球の体積は 4/3πr³ です。", "2³ = 8 です。"],
+      "solution": "体積 = 4/3×π×2³ = 32π/3（cm³）",
+      "figure": null
+    },
+    {
+      "id": "j1-solid-s5-t05",
+      "section": "s5",
+      "role": "test",
+      "question": "図の円柱の体積を求めなさい。（π を使って答えなさい）",
+      "answers": ["20π"],
+      "hints": ["柱の体積は、底面積×高さです。", "底面積は π×2² = 4π です。"],
+      "solution": "体積 = π×2²×5 = 20π（cm³）",
+      "figure": {"type": "solid", "shape": "cylinder", "r": 2, "h": 5, "labels": {"r": "2cm", "h": "5cm"}}
+    }
+  ]
+}
